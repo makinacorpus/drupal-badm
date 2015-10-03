@@ -5,7 +5,7 @@
         <span class="sr-only"><?php echo t("Toggle navigation"); ?></span>
       </button>
       <a class="navbar-brand" href="<?php echo url('<front>'); ?>">
-        <span aria-hidden="true" class="glyphicon glyphicon-home"></span>
+        <span aria-hidden="true" class="glyphicon glyphicon-tint"></span>
         <span class="sr-only"><?php echo t("Home"); ?></span>
       </a>
     </div>

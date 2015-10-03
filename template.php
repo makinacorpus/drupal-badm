@@ -90,6 +90,16 @@ function badm_breadcrumb($variables) {
   if (!empty($breadcrumb)) {
     $output = '<h2 class="sr-only">' . t('You are here') . '</h2>';
     if (!empty($breadcrumb)) {
+      // Remove first item and set the Home glyphicon, for fun.
+      $front = url('<front>');
+      array_shift($breadcrumb);
+      array_unshift($breadcrumb, <<<EOT
+<a href="$front">
+  <span aria-hidden="true" class="glyphicon glyphicon-home"></span>
+  <span class="sr-only"><?php echo t("Home"); ? ></span>
+</a>
+EOT
+      );
       $links = '<li>' . implode('</li><li>', $breadcrumb) . '</li>';
     } else {
       $links = '';
@@ -109,12 +119,15 @@ function badm_status_messages($variables) {
     switch ($type) {
       case 'error':
         $class = 'alert-danger alert-dismissible';
+        $icon = '<span class="glyphicon glyphicon-ok">';
         break;
       case 'warning':
         $class = 'alert-warning alert-dismissible';
+        $icon = '<span class="glyphicon glyphicon-ok">';
         break;
       default:
-        $class = 'alert-info alert-dismissible';
+        $class = 'alert-success alert-dismissible';
+        $icon = '<span class="glyphicon glyphicon-alert">';
         break;
     }
     foreach ($messages as $message) {
