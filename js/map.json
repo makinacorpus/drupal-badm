@@ -39,5 +39,7 @@
     "modules/system/system.js": true,
     "modules/user/user.js": true,
     "misc/tableselect.js": true,
-    "sites/all/modules/ucms/ucms_contrib/ucms_contrib.js": true
+    "sites/all/modules/ucms/ucms_contrib/ucms_contrib.js": true,
+    "sites/all/themes/custom/badm/dist/script.min.js": true,
+    "misc/batch.js": true
 }

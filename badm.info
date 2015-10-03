@@ -8,6 +8,7 @@ regions[page_bottom] = Page bottom
 regions[sidebar_first] = First sidebar
 
 settings[gulpifier] = true
+settings[map_path] = js
 
 stylesheets[all][] = dist/style.min.css
 scripts[] = dist/script.min.js

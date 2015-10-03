@@ -1,0 +1,65 @@
+
+.vertical-tabs {
+  .panel;
+  .panel-default;
+  display: table;
+  width: 100%;
+}
+
+.vertical-tabs-list {
+  .navbar-inverse;
+  display: table-cell;
+  padding: 0;
+
+  width: 1%;
+  white-space: nowrap;
+
+  > li {
+    list-style: none;
+  }
+
+  > li > a {
+    display: block;
+    padding: 10px 15px; /* Same as panels */
+    color: @navbar-inverse-link-color;
+
+    &:hover,
+    &:focus {
+      color: @navbar-inverse-link-hover-color;
+      background-color: @navbar-inverse-link-hover-bg;
+      text-decoration: none;
+    }
+  }
+
+  > .selected > a {
+    &,
+    &:hover,
+    &:focus {
+      color: @navbar-inverse-link-active-color;
+      background-color: @navbar-inverse-link-active-bg;
+    }
+  }
+
+  > .disabled > a {
+    &,
+    &:hover,
+    &:focus {
+      color: @navbar-inverse-link-disabled-color;
+      background-color: @navbar-inverse-link-disabled-bg;
+    }
+  }
+}
+
+.vertical-tabs-panes {
+  display: table-cell;
+  padding: 10px 15px; /* Same as panels */
+
+  .vertical-tabs-pane {
+    display: none;
+    overflow-y: auto;
+  }
+
+  .active {
+    display: block;
+  }
+}
