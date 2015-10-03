@@ -1,0 +1,13 @@
+name = Bootstrap Admin
+core = 7.x
+
+regions[content] = Content
+regions[help] = Help
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom
+regions[sidebar_first] = First sidebar
+
+settings[gulpifier] = true
+
+stylesheets[all][] = dist/style.min.css
+scripts[] = dist/script.min.js
