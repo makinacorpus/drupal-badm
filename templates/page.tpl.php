@@ -1,12 +1,19 @@
-<div id="page" class="container">
-
+<header id="header" class="container-fluid">
   <div class="row">
-    <div class="col-md-12">
-      <?php echo $breadcrumb; ?>
-      <?php echo render($title_prefix); ?>
-      <?php echo render($title_suffix); ?>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <?php echo $breadcrumb; ?>
+          <?php echo render($title_prefix); ?>
+          <h1 class="sr-only"><?php echo $title; ?></h1>
+          <?php echo render($title_suffix); ?>
+        </div>
+      </div>
     </div>
   </div>
+</header>
+
+<div id="page" class="container">
 
   <div class="row">
     <div class="col-md-12">

@@ -12,6 +12,7 @@ function badm_preprocess_page(&$page) {
   // Force some JS inclusion.
   $opts = ['preprocess' => true, 'every_page' => true];
   $path = drupal_get_path('theme', 'badm');
+  /*
   drupal_add_js($path . '/bootstrap/js/alert.js', $opts);
   drupal_add_js($path . '/bootstrap/js/button.js', $opts);
   drupal_add_js($path . '/bootstrap/js/collapse.js', $opts);
@@ -20,6 +21,7 @@ function badm_preprocess_page(&$page) {
   drupal_add_js($path . '/bootstrap/js/tab.js', $opts);
   drupal_add_js($path . '/bootstrap/js/tooltip.js', $opts);
   drupal_add_js($path . '/bootstrap/js/popover.js', $opts);
+   */
 }
 
 /**
@@ -72,9 +74,9 @@ function badm_menu_local_action($variables) {
   if (isset($link['href'])) {
     $link['localized_options']['attributes']['class'][] = 'btn';
     $link['localized_options']['attributes']['class'][] = 'btn-info';
-    $output .= l($title, $link['href'], $link['localized_options']);
+    $output = l($title, $link['href'], $link['localized_options']);
   } else {
-    $output .= $title;
+    $output = $title;
   }
   // $output .= "</li>";
   return $output;
@@ -134,7 +136,7 @@ function badm_admin_block($variables) {
   if (empty($block['show'])) {
     return $output;
   }
-  $output = '<div class="panel panel-default">';
+  $output = '<div class="panel panel-default admin-block">';
   if (!empty($block['title'])) {
     $output .= '<div class="panel-heading"><h3 class="panel-title">' . $block['title'] . '</h3></div>';
   }
@@ -412,9 +414,10 @@ function badm_links__toolbar_menu(&$variables) {
   $links = $variables['links'];
   $output = '';
 
-  $title = t("Administration");
+  //$title = t("Administration");
 
   if (!empty($links)) {
+    /*
     $output = <<<EOT
 <ul class="nav navbar-nav">
   <li class="dropdown">
@@ -423,6 +426,8 @@ function badm_links__toolbar_menu(&$variables) {
     </a>
     <ul class="dropdown-menu">
 EOT;
+    */
+    $output = '<ul class="nav navbar-nav">';
     foreach ($links as $link) {
 
       if (isset($link['href']) && ($link['href'] == $_GET['q'] || ($link['href'] == '<front>' && drupal_is_front_page())) && (empty($link['language']) || $link['language']->language == $language_url->language)) {
@@ -438,7 +443,8 @@ EOT;
       }
       $output .= '</li>';
     }
-    $output .= '</ul></li></ul>';
+    //$output .= '</ul></li></ul>';
+    $output .= '</ul>';
   }
 
   return $output;
