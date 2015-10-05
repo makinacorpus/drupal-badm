@@ -23,7 +23,7 @@
       <?php endif; ?>
 
       <?php if ($action_links): ?>
-        <div class="pull-right">
+        <div id="page-actions">
           <?php echo render($action_links); ?>
         </div>
       <?php endif; ?>
@@ -34,7 +34,7 @@
 
       <?php if ($page['help']): ?>
         <div class="panel panel-default">
-          <div class="panel-body">
+          <div class="panel-body alert-info">
             <?php echo render($page['help']); ?>
           </div>
         </div>

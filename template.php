@@ -73,7 +73,7 @@ function badm_menu_local_action($variables) {
   $link['localized_options']['html'] = true;
   if (isset($link['href'])) {
     $link['localized_options']['attributes']['class'][] = 'btn';
-    $link['localized_options']['attributes']['class'][] = 'btn-info';
+    $link['localized_options']['attributes']['class'][] = 'btn-success';
     $output = l($title, $link['href'], $link['localized_options']);
   } else {
     $output = $title;
@@ -499,6 +499,71 @@ EOT;
       $output .= '</li>';
     }
     $output .= '</ul></li></ul>';
+  }
+
+  return $output;
+}
+
+/**
+ * Overrides theme_links().
+ */
+function badm_links($variables) {
+  $links = $variables['links'];
+  $heading = $variables['heading'];
+  global $language_url;
+  $output = '';
+
+  if (count($links) > 0) {
+    // Treat the heading first if it is present to prepend it to the
+    // list of links.
+    if (!empty($heading)) {
+      if (is_string($heading)) {
+        // Prepare the array that will be used when the passed heading
+        // is a string.
+        $heading = array(
+          'text' => $heading,
+          // Set the default level of the heading.
+          'level' => 'h2',
+        );
+      }
+      $output .= '<' . $heading['level'];
+      if (!empty($heading['class'])) {
+        $output .= drupal_attributes(array('class' => $heading['class']));
+      }
+      $output .= '>' . check_plain($heading['text']) . '</' . $heading['level'] . '>';
+    }
+
+    $variables['attributes']['class'][] = "btn-group";
+    $output .= '<div' . drupal_attributes($variables['attributes']) . '>';
+
+    foreach ($links as $key => $link) {
+      $link['attributes']['class'][] = $key;
+      $link['attributes']['class'][] = 'btn';
+      $link['attributes']['class'][] = 'btn-default';
+
+      if (isset($link['href']) && ($link['href'] == $_GET['q'] || ($link['href'] == '<front>' && drupal_is_front_page()))
+          && (empty($link['language']) || $link['language']->language == $language_url->language)) {
+        $link['attributes']['class'][] = 'active';
+      }
+
+      if (isset($link['href'])) {
+        // Pass in $link as $options, they share the same keys.
+        $output .= l($link['title'], $link['href'], $link);
+      }
+      elseif (!empty($link['title'])) {
+        // Some links are actually not links, but we wrap these in <span> for adding title and class attributes.
+        if (empty($link['html'])) {
+          $link['title'] = check_plain($link['title']);
+        }
+        $span_attributes = '';
+        if (isset($link['attributes'])) {
+          $span_attributes = drupal_attributes($link['attributes']);
+        }
+        $output .= '<span' . $span_attributes . '>' . $link['title'] . '</span>';
+      }
+    }
+
+    $output .= '</div>';
   }
 
   return $output;

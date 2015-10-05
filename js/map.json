@@ -24,5 +24,19 @@
     "misc/tableselect.js": true,
     "modules/filter/filter.js": true,
     "modules/taxonomy/taxonomy.js": true,
-    "sites/all/modules/ucms/ucms_contrib/ucms_contrib.js": true
+    "sites/all/modules/ucms/ucms_contrib/ucms_contrib.js": true,
+    "modules/user/user.permissions.js": true,
+    "misc/states.js": true,
+    "sites/all/modules/contrib/redirect/redirect.admin.js": true,
+    "modules/user/user.js": true,
+    "sites/all/modules/contrib/features/features.js": true,
+    "misc/autocomplete.js": true,
+    "misc/ui/jquery.ui.core.min.js": true,
+    "misc/ui/jquery.ui.widget.min.js": true,
+    "misc/ui/jquery.ui.button.min.js": true,
+    "misc/ui/jquery.ui.mouse.min.js": true,
+    "misc/ui/jquery.ui.draggable.min.js": true,
+    "misc/ui/jquery.ui.position.min.js": true,
+    "misc/ui/jquery.ui.resizable.min.js": true,
+    "misc/ui/jquery.ui.dialog.min.js": true
 }

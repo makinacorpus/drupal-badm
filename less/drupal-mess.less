@@ -1,6 +1,23 @@
 
+// Convert the element-invisible class into bootstrap language
 .element-invisible {
   .sr-only;
+}
+
+// Fixes the "checkbox" class on table header
+th.checkbox, td.checkbox {
+  margin: 0;
+  min-height: auto;
+  display: table-cell;
+}
+
+// In panels, last child may reserve too much space
+.panel-body {
+  p {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
 dl {
@@ -16,4 +33,14 @@ dl {
   dl {
     margin: 0;
   }
+}
+
+#page {
+  .nav {
+    margin-bottom: 10px;
+  }
+}
+
+#page-actions {
+  margin-bottom: 10px;
 }
