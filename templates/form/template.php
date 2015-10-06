@@ -226,6 +226,7 @@ function badm_preprocess_select(&$variables) {
     }
 
     // Fill the "empty" option using the title.
+    /*
     if (!empty($element['#title_display']) && 'invisible' === $element['#title_display']) {
       if (array_key_exists(null, $element['#options'])) {
         $element['#options'][null] = $element['#title'];
@@ -235,6 +236,7 @@ function badm_preprocess_select(&$variables) {
         $element['#options'] = array(null => $element['#title']) + $element['#options'];
       }
     }
+     */
     //$element['#title_display'] = 'invisible';
   }
 }

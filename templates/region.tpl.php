@@ -1,3 +1,3 @@
 <?php if ($content): ?>
-  <?php echo $content; ?>
+  <?php echo render($content); ?>
 <?php endif; ?>

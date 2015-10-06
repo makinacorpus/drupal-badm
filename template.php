@@ -8,11 +8,10 @@ require_once __DIR__ . '/templates/form/template.php';
 /**
  * Implements hook_preprocess_page().
  */
-function badm_preprocess_page(&$page) {
+function badm_preprocess_page(&$variables) {
   // Force some JS inclusion.
   $opts = ['preprocess' => true, 'every_page' => true];
   $path = drupal_get_path('theme', 'badm');
-  /*
   drupal_add_js($path . '/bootstrap/js/alert.js', $opts);
   drupal_add_js($path . '/bootstrap/js/button.js', $opts);
   drupal_add_js($path . '/bootstrap/js/collapse.js', $opts);
@@ -21,7 +20,18 @@ function badm_preprocess_page(&$page) {
   drupal_add_js($path . '/bootstrap/js/tab.js', $opts);
   drupal_add_js($path . '/bootstrap/js/tooltip.js', $opts);
   drupal_add_js($path . '/bootstrap/js/popover.js', $opts);
-   */
+}
+
+/**
+ * Implements hook_preprorcess_node().
+ */
+function badm_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  $view_mode = $variables['view_mode'];
+
+  // Add smart template suggestions.
+  $variables['theme_hook_suggestions'][] = 'node__' . $view_mode;
+  $variables['theme_hook_suggestions'][] = 'node__' . $node->type . '__' . $view_mode;
 }
 
 /**
