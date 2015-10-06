@@ -1,0 +1,53 @@
+
+#ucms-cart {
+  .navbar-inverse;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 220px;
+  background: #333;
+}
+
+.ucms-contrib-result, .ucms-cart-item {
+  overflow: hidden;
+
+  > form {
+    display: none;
+  }
+
+  &:hover {
+    > form {
+      display: block;
+    }
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .title {
+    a {
+      color: white;
+    }
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.9;
+    background-color: @gray-dark;
+  }
+}
+
+.ucms-contrib-result {
+  width: @ucms-search-item-width;
+  height: @ucms-search-item-width;
+  margin: @ucms-search-item-gutter;
+}
+
+.ucms-cart-item {
+  width: @ucms-cart-item-width;
+  height: @ucms-cart-item-width;
+  margin: @ucms-cart-item-gutter;
+}
