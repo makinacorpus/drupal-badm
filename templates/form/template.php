@@ -346,6 +346,8 @@ function _badm_colorize_button($text) {
       t("Restore"),
       t("Revert"),
       t("Remove"),
+      t("Re-index selected"),
+      t("Re-index"),
     ),
     'btn-success' => array(
       t('Log in'),
