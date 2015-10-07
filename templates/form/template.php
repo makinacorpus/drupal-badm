@@ -20,6 +20,21 @@ function badm_form_user_login_block_alter(&$form, &$form_state) {
 }
 
 /**
+ * Generic form alter.
+ */
+function badm_form_alter(&$form, &$form_state, $form_id) {
+  if (isset($form['actions']) && isset($_GET['destination']) && !isset($form['actions']['cancel']) && !isset($form['cancel'])) {
+    $destination = drupal_parse_url($_GET['destination']);
+    $path = $destination['path'];
+    $form['actions']['cancel']['#markup'] = l("Cancel", $path, [
+      'query'       => $destination['query'],
+      'fragment'    => $destination['fragment'],
+      'attributes'  => ['class' => ['btn', 'btn-default']]
+    ]);
+  }
+}
+
+/**
  * Overrides theme_form().
  */
 function badm_form($variables) {
@@ -316,34 +331,39 @@ function _badm_colorize_button($text) {
   $generic_strings = array(
     'btn-primary' => array(
       t('Actualiser'),
+      t('Write'),
+      t('Chercher'),
+      t('Next'),
+      t('Terminer ma commande'),
+      // t("Cancel"),
+      // t("Back"),
+    ),
+    'btn-warning' => array(
+    ),
+    'btn-danger' => array(
+      t("Delete"),
+      t("Rebuild"),
+      t("Restore"),
+      t("Revert"),
+      t("Remove"),
+    ),
+    'btn-success' => array(
+      t('Log in'),
+      t('Update'),
+      t("Follow"),
+      t('Send'),
       t('Confirm'),
       t('Submit'),
-      t('Valider'),
       t('Save'),
       t('Add'),
       t('Create'),
-      t('Write'),
-      t('Send'),
       t('Apply'),
-      t('Chercher'),
-      t('Log in'),
-      t('Next'),
-      t('Terminer ma commande'),
+      t("Upload")
     ),
     'btn-default' => array(
-      'Retour', // WTF Commerce...
-      t('Back'),
-      t('Cancel'),
       t('Export'),
-      t('Follow'),
       t('Import'),
-      t('Restore'),
-      t('Rebuild'),
-      t('Update'),
       t('Stock épuisé'),
-    ),
-    'btn-transparent' => array(
-      t('Search'),
     ),
   );
   foreach ($generic_strings as $class => $strings) {

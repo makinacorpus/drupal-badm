@@ -70,5 +70,9 @@
     "sites/all/modules/contrib/ctools/js/dependent.js": true,
     "sites/all/modules/contrib/ctools/js/collapsible-div.js": true,
     "sites/all/modules/contrib/views/js/views-admin.js": true,
-    "misc/batch.js": true
+    "misc/batch.js": true,
+    "modules/file/file.js": true,
+    "modules/field/modules/text/text.js": true,
+    "modules/node/node.js": true,
+    "modules/path/path.js": true
 }
