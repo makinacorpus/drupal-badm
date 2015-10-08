@@ -5,9 +5,24 @@
   position: fixed;
   top: 0;
   right: 0;
-  bottom: 0;
+  bottom: 6em;
   width: 220px;
   background: #333;
+  z-index: 2;
+
+  .error {
+    clear: both;
+    padding: 5px;
+    font-weight: bold;
+    color: #f00;
+  }
+
+  &.drop-highlighted {
+    border: dashed 5px #fff;
+  }
+  h2 {
+    color: #fff;
+  }
 }
 
 .ucms-contrib-result, .ucms-cart-item {
@@ -38,6 +53,14 @@
     opacity: 0.9;
     background-color: @gray-dark;
   }
+
+  &.ui-draggable {
+    cursor: move;
+    z-index: 100;
+  }
+  &.ui-draggable-dragging {
+    background: #fff;
+  }
 }
 
 .ucms-contrib-result {
@@ -50,4 +73,27 @@
   width: @ucms-cart-item-width;
   height: @ucms-cart-item-width;
   margin: @ucms-cart-item-gutter;
+}
+
+#ucms-cart-trash {
+  background: #600;
+  color: #fff;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 220px;
+  text-align: center;
+  z-index: 1;
+
+  &.drop-highlighted {
+    border: dashed .4em #fff;
+    .glyphicon {
+      margin: .4em;
+    }
+  }
+
+  .glyphicon {
+    margin: .5em;
+    font-size: 3em;
+  }
 }
