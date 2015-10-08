@@ -16,6 +16,4 @@
     <?php echo render($pager); ?>
   </div>
 </div>
-<div id="ucms-contrib-cart" class="col-md-2">
-  <?php echo render($favorites); ?>
-</div>
+<?php echo render($favorites); ?>

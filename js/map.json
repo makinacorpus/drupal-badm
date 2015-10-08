@@ -92,5 +92,7 @@
     "sites/all/modules/jquery_update/replace/ui/ui/minified/jquery.ui.droppable.min.js": true,
     "sites/all/modules/jquery_update/replace/misc/jquery.form.min.js": true,
     "sites/all/modules/jquery_update/js/jquery_update.js": true,
-    "modules/file/file.js": true
+    "modules/file/file.js": true,
+    "sites/all/modules/jquery_update/replace/ui/ui/minified/jquery.ui.sortable.min.js": true,
+    "sites/all/themes/bootstrap/js/bootstrap.admin.js": true
 }
