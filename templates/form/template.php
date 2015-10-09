@@ -23,17 +23,10 @@ function badm_form_user_login_block_alter(&$form, &$form_state) {
  * Implements hook_form_FORM_ID_alter().
  */
 function badm_form_ucms_contrib_admin_content_search_form_alter(&$form, &$form_state) {
-  /*
-  <div class="input-group">
-  <input type="text" class="form-control" placeholder="Search for...">
-  <span class="input-group-btn">
-  <button class="btn btn-default" type="button">Go!</button>
-  </span>
-  </div><!-- /input-group -->
-   */
   $form['query']['#nowrapper'] = true;
   $form['query']['#prefix'] = '<div class="input-group">';
   $form['submit']['#prefix'] = '<span class="input-group-btn">';
+  $form['submit']['#content'] = '<span class="glyphicon glyphicon-search" aria-hidden="true"></span><span class="sr-only">' . t("Search") . '</span>';
   $form['submit']['#suffix'] = '</span></div>';
 }
 
@@ -139,6 +132,8 @@ function badm_button($variables) {
 
   if ($value) {
     return '<button' . drupal_attributes($element['#attributes']) . ' />' . $value . '</button>';
+  } else if (isset($element['#content'])) {
+    return '<button' . drupal_attributes($element['#attributes']) . ' />' . $element['#content'] . '</button>';
   } else {
     return '<input' . drupal_attributes($element['#attributes']) . ' />';
   }

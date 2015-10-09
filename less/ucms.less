@@ -1,15 +1,9 @@
 
 .ucms-contrib-result {
+  position: relative;
   overflow: hidden;
 
-  border: 1px solid @thumbnail-border;
-  border-radius: @thumbnail-border-radius;
-
-  &:hover {
-    > form {
-      display: block;
-    }
-  }
+  margin: 15px auto;
 
   .title {
     position: absolute;
@@ -32,11 +26,5 @@
 }
 
 .ucms-contrib-result {
-  width: @ucms-search-item-width;
   height: @ucms-search-item-width;
-  margin: @ucms-search-item-gutter;
-}
-
-#ucms-contrib-admin-content-search-form {
-  margin: @ucms-search-item-gutter;
 }

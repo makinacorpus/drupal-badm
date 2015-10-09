@@ -95,7 +95,7 @@ function badm_menu_local_action($variables) {
   if (isset($link['href'])) {
     $link['localized_options']['attributes']['class'][] = 'btn';
     $link['localized_options']['attributes']['class'][] = 'btn-success';
-    $output = l($title, $link['href'], $link['localized_options']);
+    $output = l($title, $link['href'], $link['localized_options'] + $link);
   } else {
     $output = $title;
   }
@@ -444,6 +444,42 @@ function badm_table($variables) {
   }
 
   $output .= "</table>\n";
+  return $output;
+}
+
+/**
+ * Overrides theme_links().
+ */
+function badm_links__ucms_layout_list_actions($variables) {
+
+  $links = $variables['links'];
+  $output = '';
+
+  if (!empty($links)) {
+    $output .= '<div class="btn-group" role="group">';
+    $links['view']['attributes']['class'][] = 'btn';
+    $links['view']['attributes']['class'][] = 'btn-primary';
+    $output .= l($links['view']['title'], $links['view']['href'], $links['view']);
+    unset($links['view']);
+
+    if (!empty($links)) {
+      $dropdownLabel = t("Other actions");
+      $output .= <<<EOT
+<div class="btn-group" role="group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    {$dropdownLabel}
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+EOT;
+      foreach ($links as $link) {
+        $output .= '<li>' . l($link['title'], $link['href'], $link) . '</li>';
+      }
+      $output . '</ul></div>';
+    }
+    $output .= '</div>';
+  }
+
   return $output;
 }
 
