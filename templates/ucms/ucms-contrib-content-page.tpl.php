@@ -14,8 +14,8 @@
   </div>
   <div class="row">
     <?php foreach ($items as $nid => $item): ?>
-      <div class="col-md-3" data-nid="<?php echo $nid; ?>">
-        <div class="ucms-contrib-result">
+      <div class="ucms-contrib-result col-md-3" data-nid="<?php echo $nid; ?>">
+        <div class="ucms-contrib-result-inner">
           <?php echo render($item); ?>
         </div>
       </div>
