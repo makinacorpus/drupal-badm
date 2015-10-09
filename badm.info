@@ -14,3 +14,6 @@ stylesheets[all][] = dist/style.min.css
 scripts[] = dist/script.min.js
 
 settings[gulpifier_whitelist][css][] = ucms_contrib:ucms_contrib.css
+
+; Bootstrap contrib theme is a fucking daube.
+; base theme = bootstrap

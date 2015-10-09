@@ -23,6 +23,17 @@ function badm_preprocess_page(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_html().
+ */
+function badm_preprocess_html(&$variables) {
+  foreach (['toolbar', 'toolbar-drawer'] as $class) {
+    if (false !== ($index = array_search($class, $variables['classes_array']))) {
+      unset($variables['classes_array'][$index]);
+    }
+  }
+}
+
+/**
  * Implements hook_preprorcess_node().
  */
 function badm_preprocess_node(&$variables) {
@@ -110,6 +121,14 @@ function badm_breadcrumb($variables) {
 </a>
 EOT
       );
+
+      // I seriously hate the bootstrap base theme.
+      foreach ($breadcrumb as $index => $item) {
+        if (is_array($item)) {
+          unset($breadcrumb[$index]);
+        }
+      }
+
       $links = '<li>' . implode('</li><li>', $breadcrumb) . '</li>';
     } else {
       $links = '';
