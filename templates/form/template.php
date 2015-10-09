@@ -20,6 +20,24 @@ function badm_form_user_login_block_alter(&$form, &$form_state) {
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function badm_form_ucms_contrib_admin_content_search_form_alter(&$form, &$form_state) {
+  /*
+  <div class="input-group">
+  <input type="text" class="form-control" placeholder="Search for...">
+  <span class="input-group-btn">
+  <button class="btn btn-default" type="button">Go!</button>
+  </span>
+  </div><!-- /input-group -->
+   */
+  $form['query']['#nowrapper'] = true;
+  $form['query']['#prefix'] = '<div class="input-group">';
+  $form['submit']['#prefix'] = '<span class="input-group-btn">';
+  $form['submit']['#suffix'] = '</span></div>';
+}
+
+/**
  * Generic form alter.
  */
 function badm_form_alter(&$form, &$form_state, $form_id) {
@@ -193,6 +211,7 @@ function badm_preprocess_form_element(&$variables) {
       break;
   }
 
+  $variables['nowrapper']   = empty($element['#nowrapper']) ? false : true;
   $variables['input']       = $element['#children'];
   $variables['type']        = $element['#type'];
   $variables['prefix']      = isset($element['#field_prefix']) ? $element['#field_prefix'] : null;

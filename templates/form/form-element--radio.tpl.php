@@ -1,4 +1,4 @@
-<div class="form-group">
+<?php if (!$nowrapper): ?><div class="form-group"><?php endif; ?>
   <?php if ($prefix): ?><?php echo $prefix; ?><?php endif; ?>
   <div class="radio<?php if (!empty($element['#disabled'])): ' disabled'; endif;?>">
     <?php if ($label_show && $label): ?>
@@ -12,4 +12,4 @@
     <?php if ($description): ?><p class="help-block"><?php echo $description; ?></p><?php endif; ?>
   </div>
   <?php if ($suffix): ?><?php echo $suffix; ?><?php endif; ?>
-</div>
+<?php if (!$nowrapper): ?></div><?php endif; ?>

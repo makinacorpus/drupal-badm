@@ -1,4 +1,4 @@
-<div <?php echo drupal_attributes($attributes); ?>>
+<?php if (!$nowrapper): ?><div <?php echo drupal_attributes($attributes); ?>><?php endif; ?>
   <?php if ($label): ?>
   <?php if ($label_show): ?>
   <label for="<?php echo $id ?>"><?php echo $label; ?></label>
@@ -10,4 +10,4 @@
   <?php echo $input; ?>
   <?php if ($suffix): ?><?php echo $suffix; ?><?php endif; ?>
   <?php if ($description): ?><p class="help-block"><?php echo $description; ?></p><?php endif; ?>
-</div>
+<?php if (!$nowrapper): ?></div><?php endif; ?>
