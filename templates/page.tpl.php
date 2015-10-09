@@ -1,14 +1,10 @@
-<header id="header" class="container-fluid">
+<header id="header" class="container">
   <div class="row">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <?php echo $breadcrumb; ?>
-          <?php echo render($title_prefix); ?>
-          <h1 class="sr-only"><?php echo $title; ?></h1>
-          <?php echo render($title_suffix); ?>
-        </div>
-      </div>
+    <div class="col-md-12">
+      <?php echo $breadcrumb; ?>
+      <?php echo render($title_prefix); ?>
+      <h1 class="sr-only"><?php echo $title; ?></h1>
+      <?php echo render($title_suffix); ?>
     </div>
   </div>
 </header>
