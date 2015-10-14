@@ -1,0 +1,21 @@
+
+.media {
+  margin-top: 15px !important;
+}
+
+.media-left {
+  min-width: 64px;
+
+  // I don't why I don't have those styles, should be base bootstrap...
+  img {
+    .media-object();
+    width: 64px;
+    height: 64px;
+  }
+
+  // No image, reserve space.
+  > div.media-object {
+    width: 64px;
+    height: 64px;
+  }
+}
