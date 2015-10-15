@@ -42,7 +42,7 @@ function badm_links__ucms_contrib_dislay_switch($variables) {
   $output = '';
 
   if (count($links) > 0) {
-    $output .= '<div class="btn-group">';
+    $output .= '<div class="clearfix"><div class="btn-group">';
 
     foreach ($links as $key => $link) {
 
@@ -78,7 +78,7 @@ EOT;
       }
     }
 
-    $output .= '</div>';
+    $output .= '</div></div>';
   }
 
   return $output;
