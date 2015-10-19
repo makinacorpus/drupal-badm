@@ -10,10 +10,10 @@ regions[sidebar_first] = First sidebar
 stylesheets[all][] = dist/style.min.css
 scripts[] = dist/script.min.js
 
-settings[gulpifier_enabled] = true
-settings[gulpifier_discover] = false
-settings[gulpifier_single_js] = false
-settings[gulpifier_single_css] = true
+settings[gulpifier_enabled] = 1
+settings[gulpifier_discover] = 0
+settings[gulpifier_single_js] = 0
+settings[gulpifier_single_css] = 1
 settings[gulpifier_js_blacklist][] = toolbar:toolbar.js
 settings[gulpifier_whitelist][css][] = ucms_contrib:ucms_contrib.css
 
