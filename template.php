@@ -6,6 +6,11 @@
 require_once __DIR__ . '/templates/form/template.php';
 
 /**
+ * Node alterations.
+ */
+require_once __DIR__ . '/templates/node/template.php';
+
+/**
  * UCMS specifics.
  */
 require_once __DIR__ . '/templates/ucms/template.php';
