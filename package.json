@@ -5,12 +5,7 @@
     "devDependencies": {
         "gulp": "latest",
         "gulp-rename": "latest",
-        "gulp-concat": "latest",
-        "gulp-uglify": "latest",
         "gulp-minify-css": "latest",
-        "gulp-less": "latest",
-        "gulp.spritesmith": "latest",
-        "gulp-imagemin": "latest",
-        "gulp-jshint": "latest"
+        "gulp-less": "latest"
     }
 }
