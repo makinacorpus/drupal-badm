@@ -10,6 +10,44 @@ th.checkbox, td.checkbox {
   min-height: auto;
   display: table-cell;
 }
+td, th {
+  div.checkbox {
+    margin: 0;
+    input[type="checkbox"],
+    input {
+      position: inherit;
+      margin: 0;
+    }
+  }
+}
+
+/*
+table {
+  td div.checkbox > input {
+    margin-left: inherit;
+    position: inherit;
+  }
+}
+ */
+
+.confirmation {
+  > fieldset {
+    padding: @padding-large-vertical @padding-large-horizontal;
+    margin: @padding-large-vertical @padding-large-horizontal;
+    margin-bottom: 0;
+    .form-actions {
+      margin-top: @padding-large-vertical;
+    }
+  }
+}
+.dialog {
+  .confirmation {
+    > fieldset {
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
 
 // In panels, last child may reserve too much space
 .panel-body {
@@ -51,6 +89,11 @@ dl {
       margin-left: 0;
     }
   }
+}
+
+.description {
+  .small;
+  .text-muted;
 }
 
 .progress {

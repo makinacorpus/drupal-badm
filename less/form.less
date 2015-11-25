@@ -4,7 +4,6 @@ textarea {
   padding: 10px 15px;
 }
 
-
 table {
   td, th {
     vertical-align: middle !important; // Hate that.
@@ -17,8 +16,64 @@ table {
 
 .form-actions {
   .clearfix;
+  margin-bottom: @padding-large-vertical;
   > * {
     .pull-right;
     margin-left: 10px;
+  }
+}
+
+.confirmation {
+  #edit-submit {
+    .btn-danger();
+  }
+}
+
+a#edit-cancel {
+  .btn();
+  .btn-default();
+}
+
+fieldset {
+  &.panel {
+    // Minor fix, because we use legend and stuff somewhere there is a border
+    // half erased, can't get to know why, so let's remove it anyway
+    border: 1px solid transparent;
+  }
+  legend {
+    font-size: inherit;
+  }
+}
+
+#autocomplete {
+  // Hope this is common to all Drupal stuff.
+  .panel();
+  > ul {
+    .panel-body();
+  }
+}
+
+.inline-container-mixin {
+  .row;
+  display: table-row;
+  > * {
+    display: table-cell;
+    vertical-align: middle;
+    padding-right: 15px;
+  }
+}
+
+fieldset.container-inline > div, div.container-inline {
+  .inline-container-mixin();
+  .form-group {
+    .clearfix();
+  }
+}
+
+.form-inline {
+  .input-group {
+    > .form-control {
+      width: auto;
+    }
   }
 }

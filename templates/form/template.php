@@ -7,33 +7,110 @@
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function badm_form_user_login_alter(&$form, &$form_state) {
-  $form['name']['#title_force'] = true;
-  $form['name']['#title'] = t("Your e-mail address");
+function badm_form_user_filter_form_alter(&$form, &$form_state) {
+  $form['filters']['#attributes']['class'][] = 'form-horizontal';
+  unset(
+    $form['filters']['#theme'],
+    $form['filters']['status']['#type'],
+    $form['filters']['status']['#attributes'],
+    $form['filters']['status']['#prefix'],
+    $form['filters']['status']['filters']['#prefix'],
+    $form['filters']['status']['filters']['#attributes'],
+    $form['filters']['status']['filters']['#type'],
+    $form['filters']['status']['actions']['#attributes']
+  );
+  if (isset($form['filters']['status']['filters'])) {
+    foreach (element_children($form['filters']['status']['filters']) as $key) {
+      $form['filters']['status']['filters'][$key]['#form_horizontal'] = true;
+    }
+  }
 }
 
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function badm_form_user_login_block_alter(&$form, &$form_state) {
-  $form['name']['#title_force'] = true;
+function badm_form_node_admin_content_alter(&$form, &$form_state) {
+  $form['filter']['filters']['#attributes']['class'][] = 'form-horizontal';
+  unset(
+    // $form['filter']['filters']['#type'],
+    // $form['filter']['filters']['#attributes'],
+    // $form['filter']['filters']['#title'],
+    $form['filter']['filters']['#theme'],
+    $form['filter']['filters']['status']['#type'],
+    $form['filter']['filters']['status']['#attributes'],
+    $form['filter']['filters']['status']['#prefix'],
+    $form['filter']['filters']['status']['filters']['#prefix'],
+    $form['filter']['filters']['status']['filters']['#attributes'],
+    $form['filter']['filters']['status']['filters']['#type'],
+    $form['filter']['filters']['status']['actions']['#attributes']
+  );
+  if (isset($form['filter']['filters']['status']['filters'])) {
+    foreach (element_children($form['filter']['filters']['status']['filters']) as $key) {
+      $form['filter']['filters']['status']['filters'][$key]['#form_horizontal'] = true;
+    }
+  }
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Recurse into forms in order to detect vertical tabs and disable
+ * collapsing on children.
  */
-function badm_form_ucms_contrib_admin_content_search_form_alter(&$form, &$form_state) {
-  $form['query']['#nowrapper'] = true;
-  $form['query']['#prefix'] = '<div class="input-group">';
-  $form['submit']['#prefix'] = '<span class="input-group-btn">';
-  $form['submit']['#content'] = '<span class="glyphicon glyphicon-search" aria-hidden="true"></span><span class="sr-only">' . t("Search") . '</span>';
-  $form['submit']['#suffix'] = '</span></div>';
+function _badm_vertical_tabs_find($form, &$ret) {
+  foreach (element_children($form) as $key) {
+    if (isset($form[$key]['#type']) && 'vertical_tabs' === $form[$key]['#type']) {
+      $ret[] = $key;
+      _badm_vertical_tabs_find($form[$key], $ret);
+    }
+  }
+}
+
+/**
+ * Recurse into forms in order to detect vertical tabs and disable
+ * collapsing on children.
+ */
+function _badm_vertical_tabs_recursion(&$form, $vertical_tabs = []) {
+  if (isset($form['#type']) && 'fieldset' === $form['#type'] && isset($form['#group'])) {
+    if (in_array($form['#group'], $vertical_tabs)) {
+      $form['#collapsible'] = 0;
+      $form['#collapsed'] = 0;
+    }
+  }
+  foreach (element_children($form) as $key) {
+    _badm_vertical_tabs_recursion($form[$key], $vertical_tabs);
+  }
 }
 
 /**
  * Generic form alter.
  */
 function badm_form_alter(&$form, &$form_state, $form_id) {
+
+  // Alter the confirm form, because Drupal is stupid.
+  if ('confirm_form' === $form['#theme']) {
+
+    $question = drupal_get_title();
+    if ($item = menu_get_item()) {
+      if (empty($item['title'])) {
+        drupal_set_title(t("Confirmation"));
+      } else {
+        drupal_set_title($item['title']);
+      }
+    }
+
+    $question = [
+      '#prefix' => '<p class="lead"><strong>',
+      '#markup' => $question,
+      '#suffix' => '</strong></p>',
+      '#weight' => -100,
+    ];
+    array_unshift($form, $question);
+  }
+
+  // We have to do 2 passes...
+  $vertical_tabs = [];
+  _badm_vertical_tabs_find($form, $vertical_tabs);
+  _badm_vertical_tabs_recursion($form, $vertical_tabs);
+
   if (isset($form['actions']) && isset($_GET['destination']) && !isset($form['actions']['cancel']) && !isset($form['cancel'])) {
     $destination = drupal_parse_url($_GET['destination']);
     $path = $destination['path'];
@@ -79,16 +156,94 @@ function badm_form($variables) {
 }
 
 /**
+ * Renders the filter_format another way.
+ */
+function badm_fieldset_filter_format($variables) {
+  $element = &$variables['element'];
+  element_set_attributes($element, ['id']);
+
+  // A modal is perfect for this.
+  $text = t("Text format");
+  $modalId = isset($element['#id']) ? ($element['#id'] . '-modal') : drupal_html_id('modal-inner');
+  $element['#type'] = 'container';
+  $closeText = t("Close");
+  $titleText = t("Change format");
+  $content = $element['#children'];
+
+  return <<<EOT
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{$modalId}">
+  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+  {$text}
+</button>
+<div class="modal fade" id="{$modalId}" tabindex="-1" role="dialog" aria-labelledby="{$modalId}Label">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{$closeText}"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="{$modalId}Label">{$titleText}</h4>
+      </div>
+      <div class="modal-body">
+        {$content}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{$closeText}</button>
+      </div>
+    </div>
+  </div>
+</div>
+EOT;
+}
+
+/**
  * Overrides theme_fieldset().
  */
 function badm_fieldset($variables) {
-  $element = $variables['element'];
+  $element = &$variables['element'];
+
+  if (isset($element['help']) && isset($element['format']) && isset($element['guidelines'])) {
+    // We are rendering filter tips, swap the fieldset for something else.
+    return badm_fieldset_filter_format($variables);
+  }
+
   element_set_attributes($element, array('id'));
+
+  $collapsible  = isset($element['#collapsible']) ? $element['#collapsible'] : false;
+  $collapsed    = isset($element['#collapsed']) ? $element['#collapsed'] : false;
+  $innerid      = isset($element['#id']) ? ($element['#id'] . '-content') : drupal_html_id('fieldset-inner');
+  $innerclass   = '';
+  $title        = isset($element['#title']) ? $element['#title'] : null;
+
+  $element['#attributes']['class'][] = 'panel panel-default';
+  if ($collapsible && $collapsed) {
+    $innerclass = ' collapse';
+  }
+
+  if (false !== ($index = array_search('collapsible', $element['#attributes']['class']))) {
+    unset($element['#attributes']['class'][$index]);
+    if (empty($title)) {
+      $title = t("Display");
+    }
+    if (false !== ($index = array_search('collapsed', $element['#attributes']['class']))) {
+      unset($element['#attributes']['class'][$index]);
+    }
+  }
 
   $output = '<fieldset' . drupal_attributes($element['#attributes']) . '>';
   if (!empty($element['#title'])) {
-    $output .= '<legend>' . $element['#title'] . '</legend>';
+    if ($collapsible) {
+      $output .= <<<EOT
+<legend class="panel-heading">
+  <a role="button" data-toggle="collapse" href="#{$innerid}">
+    {$title}
+    <span class="caret"></span>
+  </a>
+</legend>
+EOT;
+    } else {
+      $output .= '<legend class="panel-heading">' . $element['#title'] . '</legend>';
+    }
   }
+  $output .= '<div id="' . $innerid . '" class="panel-body' . $innerclass . '">';
   if (!empty($element['#description'])) {
     $output .= '<p>' . $element['#description'] . '</p>';
   }
@@ -96,7 +251,7 @@ function badm_fieldset($variables) {
   if (isset($element['#value'])) {
     $output .= $element['#value'];
   }
-  $output .= "</fieldset>";
+  $output .= "</div></fieldset>";
   return $output;
 }
 
@@ -148,22 +303,13 @@ function badm_submit($variables) {
 }
 
 /**
- * Implements hook_webform_component_render_alter().
- */
-function badm_webform_component_render_alter(&$element, $component, $form_state) {
-  // Redmine #7763
-  if ('textarea' === $element['#type']) {
-    $element['#cols'] = 10;
-  }
-}
-
-/**
  * Implements hook_preprocess_HOOK().
  */
 function badm_preprocess_form_element(&$variables) {
+
   $element = &$variables['element'];
   $element += array('#title_display' => 'before');
-  $attributes = array();
+  $attributes = $element['#attributes'];
 
   if (isset($element['#id'])) {
     $variables['id'] = $element['#id'];
@@ -181,42 +327,39 @@ function badm_preprocess_form_element(&$variables) {
     $attributes['class'][] = 'form-type-' . strtr($element['#type'], '_', '-');
   }
   if (!empty($element['#name'])) {
-    $attributes['class'][] = 'form-item-' . strtr($element['#name'], array(
-        ' ' => '-',
-        '_' => '-',
-        '[' => '-',
-        ']' => '',
-      ));
+    $attributes['class'][] = 'form-item-' . strtr($element['#name'], [' ' => '-', '_' => '-', '[' => '-', ']' => '']);
   }
+
   switch ($element['#type']) {
-
-    case 'textfield':
-    case 'date_select':
-      if (empty($element['#title_force'])) {
-        $element['#title_display'] = 'invisible';
-      }
-      break;
-
-    case 'select':
-      //$element['#title_display'] = 'invisible';
-      break;
-
+    case 'checkbox':
+      // Title has already been rendered.
+      $element['#title_display'] = 'invisible';
+      unset($element['#title']);
     case 'list_other_select':
       $element['#title_display'] = 'before';
       break;
   }
 
-  $variables['nowrapper']   = empty($element['#nowrapper']) ? false : true;
-  $variables['input']       = $element['#children'];
-  $variables['type']        = $element['#type'];
-  $variables['prefix']      = isset($element['#field_prefix']) ? $element['#field_prefix'] : null;
-  $variables['suffix']      = isset($element['#field_suffix']) ? $element['#field_suffix'] : null;
-  $variables['description'] = isset($element['#description']) ? $element['#description'] : null;
-  $variables['label_show']  = ($element['#title_display'] === 'before' || $element['#title_display'] === 'after');
-  $variables['label']       = isset($element['#title']) ? filter_xss_admin($element['#title']) : null;
-  $variables['attributes']  = $attributes;
+  $variables['form_horizontal'] = empty($element['#form_horizontal']) ? false : true;
+  $variables['form_group']      = empty($element['#form_group']) ? false : true;
+  $variables['nowrapper']       = empty($element['#nowrapper']) ? false : true;
+  $variables['input']           = $element['#children'];
+  $variables['type']            = $element['#type'];
+  $variables['prefix']          = isset($element['#field_prefix']) ? $element['#field_prefix'] : null;
+  $variables['suffix']          = isset($element['#field_suffix']) ? $element['#field_suffix'] : null;
+  $variables['description']     = isset($element['#description']) ? $element['#description'] : null;
+  $variables['label_show']      = ($element['#title_display'] === 'before' || $element['#title_display'] === 'after');
+  $variables['label']           = isset($element['#title']) ? filter_xss_admin($element['#title']) : null;
+  $variables['attributes']      = $attributes;
 
   $variables['theme_hook_suggestions'][] = 'form_element__' . $element['#type'];
+  if ($variables['form_group'] && $variables['form_horizontal']) {
+    $variables['theme_hook_suggestions'][] = 'form_element__horizontal_group';
+  } else if ($variables['form_horizontal']) {
+    $variables['theme_hook_suggestions'][] = 'form_element__horizontal';
+  } else if ($variables['form_group']) {
+    $variables['theme_hook_suggestions'][] = 'form_element__group';
+  }
 }
 
 /**
@@ -224,6 +367,12 @@ function badm_preprocess_form_element(&$variables) {
  */
 function badm_preprocess_textfield(&$variables) {
   $element = &$variables['element'];
+
+  // Enculé de Drupal:
+  if (60 === $element['#size']) {
+    unset($element['#size'], $element['#attributes']['size']);
+  }
+
   $element['#attributes']['class'][] = 'form-control';
   if (!empty($element['#title'])) {
     if (empty($element['#attributes']['title'])) {
@@ -237,6 +386,40 @@ function badm_preprocess_textfield(&$variables) {
       $element['#title_display'] = 'invisible';
     }
   }
+}
+
+/**
+ * Overrides theme_checkbox().
+ */
+function badm_checkbox($variables) {
+  $element = $variables['element'];
+  $element['#attributes']['type'] = 'checkbox';
+  element_set_attributes($element, array('id', 'name', '#return_value' => 'value'));
+
+  // Unchecked checkbox has #value of integer 0.
+  if (!empty($element['#checked'])) {
+    $element['#attributes']['checked'] = 'checked';
+  }
+  _form_set_class($element, array('form-checkbox'));
+
+  $attributes = drupal_attributes($element['#attributes']);
+  if (isset($element['#title'])) {
+    $label = filter_xss($element['#title']);
+  } else {
+    $label = null;
+  }
+
+  if (!$label || isset($element['#title_display']) && 'invisible' === $element['#title_display']) {
+    return "<input{$attributes}/>";
+  }
+
+  return <<<EOT
+<div class="checkbox">
+  <label>
+    <input{$attributes}/> {$label}
+  </label>
+</div>
+EOT;
 }
 
 /**
@@ -311,7 +494,7 @@ function badm_tableselect($variables) {
       $row['data'][] = drupal_render($element[$key]);
       // As theme_table only maps header and row columns by order, create the
       // correct order by iterating over the header fields.
-      foreach ($element['#header'] as $fieldname => $title) {
+      foreach (array_keys($element['#header']) as $fieldname) {
         $row['data'][] = $element['#options'][$key][$fieldname];
       }
       $rows[] = $row;

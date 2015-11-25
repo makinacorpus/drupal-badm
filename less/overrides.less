@@ -1,0 +1,31 @@
+
+.navbar-brand {
+  padding: @navbar-padding-vertical;
+}
+
+#menu {
+  border-top: 0 !important;
+  border-left: 0 !important;
+  .navbar-brand {
+    padding: 0 !important;
+  }
+}
+
+.btn-contrib, .btn-add {
+  .btn-primary();
+}
+
+.btn-remove {
+  .btn-danger();
+}
+
+#minidialog {
+  display: block !important;
+}
+
+// When no padding, avoid label to stick to the input
+.form-horizontal {
+  .control-label {
+    padding-right: @padding-large-horizontal;
+  }
+}

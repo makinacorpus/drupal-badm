@@ -35,38 +35,13 @@ function badm_form_node_form_pre_render($form) {
 
   // Exclude all non visible items. Note that fieldset will have a specific
   // case in the foreach loop.
-  $excluded_types = array(
+  $excluded_types = [
     'value'         => true,
     'hidden'        => true,
     'token'         => true,
     'actions'       => true,
     'vertical_tabs' => true,
-  );
-
-  /*
-  // Do some business specific alterations depending on the form contents.
-  $move_candidates = array(); array(
-    'planning' => array('options', 100),
-    'field_admin_desc' => array('node_form_orphans', -20),
-  );
-
-  // We don't want jalon to be part of it
-  $node_type = '';
-  if (!empty($form['type']['#value'])) {
-    $node_type = $form['type']['#value'];
-  }
-
-  if ($node_type != 'jalon') {
-    foreach ($move_candidates as $key => $options) {
-      list($fieldset, $weight) = $options;
-      if (isset($form[$key]) && isset($form[$fieldset]) && (!isset($form[$fieldset]['#access']) || $form[$fieldset]['#access'])) {
-        $form[$fieldset][$key] = $form[$key];
-        $form[$fieldset][$key]['#weight'] = $weight;
-        unset($form[$key]);
-      }
-    }
-  }
-   */
+  ];
 
   foreach (element_children($form) as $key) {
 
@@ -88,15 +63,15 @@ function badm_form_node_form_pre_render($form) {
 
       default:
         $form['node_form_orphans'][$key] = $element;
-        // @todo This should be done, but it breaks ordering...
-        //   Ordering needs to be restored at the field config level in order
-        //   to avoid further bad surprises such as this one, but I don't have
-        //   time right now.
-        // uasort($form['node_form_orphans'], 'drupal_sort_weight');
+        // This breaks ordering... Ideally ordering would need to be restored
+        // at the field config level in order to avoid further bad surprises
+        // but instead we just force the reordering below.
         unset($form[$key]);
         break;
     }
   }
+
+  uasort($form['node_form_orphans'], 'element_sort');
 
   return $form;
 }

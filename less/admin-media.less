@@ -1,0 +1,89 @@
+// Media and file entity module overrides.
+
+.js-hide {
+  // CTools flavored, hum such a bitch.
+  .sr-only();
+}
+
+.highlight {
+  outline: 3px solid @input-border-focus;
+  transition: opacity .25s ease-in-out;
+  filter: brightness(1.3);
+  color: @input-border-focus;
+}
+
+#media-browser-library-list {
+  list-style: none;
+
+  > li {
+    .clearfix();
+
+    float: left;
+    position: relative;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 10px;
+
+    .label-wrapper {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .form-item {
+      position: absolute;
+      top: 50%;
+      input {
+        margin-left: 10px;
+        position: absolute;
+        top: -50%;
+      }
+    }
+
+    &:hover {
+      .highlight();
+    }
+  }
+
+  > li, .media-item {
+    height: 180px;
+    width: 180px;
+  }
+
+  .selected {
+    .highlight();
+  }
+}
+
+#media-browser-page {
+  #media-browser-library-list {
+
+    > li, .media-item {
+      height: 100px;
+      width: 100px;
+    }
+  }
+}
+
+.media-widget, #media-browser-page {
+
+  .fake-cancel, .fake-submit {
+    .sr-only();
+  }
+
+  .button {
+    .btn();
+    .btn-primary();
+  }
+  .remove {
+    .btn-danger();
+  }
+  .button-no {
+    .btn-danger();
+  }
+  .button-yes {
+    .btn-success();
+  }
+}

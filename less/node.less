@@ -1,21 +1,66 @@
 
 .media {
-  margin-top: 15px !important;
+  margin-top: @padding-large-vertical !important;
 }
 
 .media-left {
-  min-width: 64px;
+  min-width: 118px;
 
   // I don't why I don't have those styles, should be base bootstrap...
   img {
     .media-object();
-    width: 64px;
-    height: 64px;
+    width: 118px;
+    height: 118px;
   }
 
   // No image, reserve space.
   > div.media-object {
-    width: 64px;
-    height: 64px;
+    width: 118px;
+    height: 118px;
+  }
+}
+
+/*
+@media (min-width: @screen-lg-min) {
+  .media-left {
+    min-width: 236px;
+    img, > div.media-object {
+      width: 236px;
+      height: 236px;
+    }
+  }
+}
+ */
+
+@media (max-width: @screen-sm-min) {
+  .media-left {
+    min-width: 59px;
+    img, > div.media-object {
+      width: 59px;
+      height: 59px;
+    }
+  }
+}
+
+.media-xs {
+  margin-top: @padding-small-vertical !important;
+  .media-left {
+    min-width: 59px;
+    img, > div.media-object {
+      width: 59px;
+      height: 59px;
+    }
+  }
+}
+
+@media (max-width: @screen-sm-max) {
+  .media-xs {
+    .media-left {
+      min-width: 44px;
+      img, > div.media-object {
+        width: 44px;
+        height: 44px;
+      }
+    }
   }
 }
