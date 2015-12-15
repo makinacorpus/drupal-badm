@@ -1,0 +1,19 @@
+{
+    "name": "makinacorpus/drupal-badm",
+    "type": "drupal-theme",
+    "description": " Bootstrap based admin theme",
+    "keywords": [],
+    "homepage": "http://github.com/makinacorpus/drupal-badm",
+    "license": "GPL-2",
+    "authors": [
+        {
+            "name": "Pierre Rineau",
+            "email": "pierre.rineau@makina-corpus.com"
+        },
+        {
+            "name": "Makina Corpus",
+            "homepage": "http://makina-corpus.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
