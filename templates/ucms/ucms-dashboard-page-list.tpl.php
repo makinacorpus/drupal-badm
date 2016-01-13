@@ -1,6 +1,8 @@
 <div id="ucms-contrib-facets" class="col-md-2">
-  <?php echo render($display); ?>
-  <?php echo render($facets); ?>
+  <?php echo render($displayLinks); ?>
+  <?php foreach ($filters as $filter): ?>
+    <?php echo render($filter); ?>
+  <?php endforeach; ?>
 </div>
 <div id="ucms-contrib-results" class="col-md-10">
   <div class="row">
@@ -9,10 +11,9 @@
     </div>
   </div>
   <div class="row">
-    <?php echo render($nodes); ?>
+    <?php echo render($displayView); ?>
   </div>
   <div class="row">
     <?php echo render($pager); ?>
   </div>
 </div>
-<?php echo render($favorites); ?>
