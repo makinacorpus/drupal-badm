@@ -7,6 +7,21 @@
 /**
  * Implements hook_form_FORM_ID_alter().
  */
+function badm_form_user_login_alter(&$form, &$form_state) {
+  $form['name']['#title_force'] = true;
+  $form['name']['#title'] = t("Your e-mail address");
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function badm_form_user_login_block_alter(&$form, &$form_state) {
+  $form['name']['#title_force'] = true;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
 function badm_form_user_filter_form_alter(&$form, &$form_state) {
   $form['filters']['#attributes']['class'][] = 'form-horizontal';
   unset(
@@ -81,9 +96,30 @@ function _badm_vertical_tabs_recursion(&$form, $vertical_tabs = []) {
 }
 
 /**
+ * Tell if the current form is horizontal
+ */
+function _badm_form_is_horizontal($set = null) {
+  static $is_horizontal = false;
+  if (null !== $set) {
+    $is_horizontal = (bool)$set;
+  }
+  return $is_horizontal;
+}
+
+/**
  * Generic form alter.
  */
 function badm_form_alter(&$form, &$form_state, $form_id) {
+
+  if (isset($form['#form_horizontal'])) {
+    _badm_form_is_horizontal($form['#form_horizontal']);
+  } else {
+    _badm_form_is_horizontal(false);
+  }
+
+  if (_badm_form_is_horizontal()) {
+    $form['#attributes']['class'][] = 'form-horizontal';
+  }
 
   // Alter the confirm form, because Drupal is stupid.
   if ('confirm_form' === $form['#theme']) {
@@ -331,22 +367,36 @@ function badm_preprocess_form_element(&$variables) {
   }
 
   switch ($element['#type']) {
+
+    case 'radio':
     case 'checkbox':
       // Title has already been rendered.
       $element['#title_display'] = 'invisible';
       unset($element['#title']);
+      break;
+
     case 'list_other_select':
       $element['#title_display'] = 'before';
       break;
   }
 
-  $variables['form_horizontal'] = empty($element['#form_horizontal']) ? false : true;
-  $variables['form_group']      = empty($element['#form_group']) ? false : true;
+  if (isset($element['#form_horizontal'])) {
+    $is_horizontal = (bool)$element['#form_horizontal'];
+  } else {
+    $is_horizontal = _badm_form_is_horizontal();
+  }
+
+  $variables['form_horizontal'] = $is_horizontal;
+  $variables['prefix']          = isset($element['#field_prefix']) ? $element['#field_prefix'] : null;
+  $variables['suffix']          = isset($element['#field_suffix']) ? $element['#field_suffix'] : null;
+  if (isset($element['#form_group'])) {
+    $variables['form_group'] = $element['#form_group'];
+  } else {
+    $variables['form_group'] = !empty($variables['prefix']) || !empty($variables['suffix']);
+  }
   $variables['nowrapper']       = empty($element['#nowrapper']) ? false : true;
   $variables['input']           = $element['#children'];
   $variables['type']            = $element['#type'];
-  $variables['prefix']          = isset($element['#field_prefix']) ? $element['#field_prefix'] : null;
-  $variables['suffix']          = isset($element['#field_suffix']) ? $element['#field_suffix'] : null;
   $variables['description']     = isset($element['#description']) ? $element['#description'] : null;
   $variables['label_show']      = ($element['#title_display'] === 'before' || $element['#title_display'] === 'after');
   $variables['label']           = isset($element['#title']) ? filter_xss_admin($element['#title']) : null;
@@ -415,6 +465,39 @@ function badm_checkbox($variables) {
 
   return <<<EOT
 <div class="checkbox">
+  <label>
+    <input{$attributes}/> {$label}
+  </label>
+</div>
+EOT;
+}
+
+/**
+ * Overrides theme_radio().
+ */
+function badm_radio($variables) {
+  $element = $variables['element'];
+  $element['#attributes']['type'] = 'radio';
+  element_set_attributes($element, array('id', 'name', '#return_value' => 'value'));
+
+  if (isset($element['#return_value']) && $element['#value'] !== FALSE && $element['#value'] == $element['#return_value']) {
+    $element['#attributes']['checked'] = 'checked';
+  }
+  _form_set_class($element, array('form-radio'));
+
+  $attributes = drupal_attributes($element['#attributes']);
+  if (isset($element['#title'])) {
+    $label = filter_xss($element['#title']);
+  } else {
+    $label = null;
+  }
+
+  if (!$label || isset($element['#title_display']) && 'invisible' === $element['#title_display']) {
+    return "<input{$attributes}/>";
+  }
+
+  return <<<EOT
+<div class="radio">
   <label>
     <input{$attributes}/> {$label}
   </label>
@@ -494,7 +577,7 @@ function badm_tableselect($variables) {
       $row['data'][] = drupal_render($element[$key]);
       // As theme_table only maps header and row columns by order, create the
       // correct order by iterating over the header fields.
-      foreach (array_keys($element['#header']) as $fieldname) {
+      foreach ($element['#header'] as $fieldname => $title) {
         $row['data'][] = $element['#options'][$key][$fieldname];
       }
       $rows[] = $row;
