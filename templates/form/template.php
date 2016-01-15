@@ -373,6 +373,10 @@ function badm_preprocess_form_element(&$variables) {
       // Title has already been rendered.
       $element['#title_display'] = 'invisible';
       unset($element['#title']);
+      // FIXME: No better way ?
+      if (!empty($element['#parents'])) {
+        $element['#form_horizontal'] = false;
+      }
       break;
 
     case 'list_other_select':
@@ -487,7 +491,7 @@ function badm_radio($variables) {
 
   $attributes = drupal_attributes($element['#attributes']);
   if (isset($element['#title'])) {
-    $label = filter_xss($element['#title']);
+    $label = filter_xss_admin($element['#title']);
   } else {
     $label = null;
   }
