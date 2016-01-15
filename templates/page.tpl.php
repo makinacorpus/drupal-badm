@@ -1,4 +1,4 @@
-<header id="header" class="container">
+<header id="header" class="container-fluid">
   <div class="row">
     <div class="col-md-12">
       <?php echo $breadcrumb; ?>
@@ -9,7 +9,7 @@
   </div>
 </header>
 
-<div id="page" class="container">
+<div id="page" class="container-fluid">
 
   <div class="row">
     <div class="col-md-12">
