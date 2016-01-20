@@ -40,13 +40,13 @@
   </div>
 
   <div class="row">
-    <?php if (!empty($sidear_first)): ?>
-      <div id="sidebar" class="col-md-3">
-        <?php echo render($sidear_first); ?>
-      </div>
+    <?php if (!empty($page['sidebar_first'])): ?>
       <div id="content" class="col-md-9">
         <a id="main-content" class="sr-only"></a>
         <?php echo render($page['content']); ?>
+      </div>
+      <div id="sidebar" class="col-md-3">
+        <?php echo render($page['sidebar_first']); ?>
       </div>
     <?php else: ?>
       <div id="main" class="col-md-12">
