@@ -83,3 +83,34 @@ EOT;
 
   return $output;
 }
+
+function badm_links__ucms_contrib_actions__icon($variables) {
+  $links    = $variables['links'];
+  $heading  = $variables['heading'];
+  $output   = '';
+  if (count($links) > 0) {
+    if (!empty($heading)) {
+      if (is_string($heading)) {
+        $heading = [
+          'text'  => $heading,
+          'level' => 'strong',
+          'class' => [],
+        ];
+      }
+      $output .= '<' . $heading['level'];
+      if (!empty($heading['class'])) {
+        $output .= drupal_attributes(['class' => $heading['class']]);
+      }
+      $output .= '>' . check_plain($heading['text']) . '</' . $heading['level'] . '>';
+    }
+    $output .= '<div class="list-group small">';
+    foreach ($links as $link) {
+      if (isset($link['href'])) {
+        $link['attributes']['class'][] = 'list-group-item';
+        $output .= l($link['title'], $link['href'], $link);
+      }
+    }
+    $output .= '</div>';
+  }
+  return $output;
+}
