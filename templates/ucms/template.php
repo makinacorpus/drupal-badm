@@ -33,16 +33,13 @@ function badm_links__ucms_dashboard_filter($variables) {
         } else {
           $r_title = filter_xss_admin($link['title']);
         }
-
         $r_href = url($link['href'], $link);
-
         // And  we must manually handle the active class too for the checkbox.
         if (!empty($link['attributes']['class']) && in_array('active', $link['attributes']['class'])) {
           $r_c_attributes = ' checked="checked"';
         } else {
           $r_c_attributes = '';
         }
-
         // Also link attributes, and it should it.
         if (empty($links['attributes'])) {
           $r_attributes = '';
