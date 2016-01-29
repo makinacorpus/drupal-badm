@@ -22,14 +22,50 @@ function badm_links__ucms_dashboard_filter($variables) {
       }
       $output .= '>' . check_plain($heading['text']) . '</' . $heading['level'] . '>';
     }
-    $output .= '<div class="list-group small">';
+    $output .= '<ul class="list-unstyled">';
     foreach ($links as $link) {
       if (isset($link['href'])) {
         $link['attributes']['class'][] = 'list-group-item';
-        $output .= l($link['title'], $link['href'], $link);
+
+        // Deal with title manually because we are going to force HTML code anyway
+        if (empty($link['html'])) {
+          $r_title = check_plain($link['title']);
+        } else {
+          $r_title = filter_xss_admin($link['title']);
+        }
+
+        $r_href = url($link['href'], $link);
+
+        // And  we must manually handle the active class too for the checkbox.
+        if (!empty($link['attributes']['class']) && in_array('active', $link['attributes']['class'])) {
+          $r_c_attributes = ' checked="checked"';
+        } else {
+          $r_c_attributes = '';
+        }
+
+        // Also link attributes, and it should it.
+        if (empty($links['attributes'])) {
+          $r_attributes = '';
+        } else {
+          unset($links['attributes']['href']); // Just in case...
+          $r_attributes = drupal_attributes($links['attributes']);
+        }
+
+        $output .= <<<EOT
+<li>
+  <div class="checkbox">
+    <label>
+      <a href="{$r_href}"{$r_attributes}>
+        <input type="checkbox"{$r_c_attributes}>
+        {$r_title}
+      </a>
+    </label>
+  </div>
+</li>
+EOT;
       }
     }
-    $output .= '</div>';
+    $output .= '</ul>';
   }
   return $output;
 }
