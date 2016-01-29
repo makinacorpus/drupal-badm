@@ -3,7 +3,7 @@
 /**
  * Overrides theme_links().
  */
-function badm_links__ucms_search_facet_terms($variables) {
+function badm_links__ucms_dashboard_filter($variables) {
   $links    = $variables['links'];
   $heading  = $variables['heading'];
   $output   = '';
