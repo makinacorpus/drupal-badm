@@ -25,6 +25,7 @@ function badm_links__ucms_dashboard_sort($variables) {
       'html'        => true,
       'attributes'  => [
         'class'         => ['dropdown-toggle'],
+        'title'         => $variables['heading'],
         'role'          => 'button',
         'aria-haspopup' => "true",
         'aria-expanded' => "false",
