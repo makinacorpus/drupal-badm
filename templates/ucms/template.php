@@ -3,6 +3,49 @@
 /**
  * Overrides theme_links().
  */
+function badm_links__ucms_dashboard_sort($variables) {
+
+  $links  = $variables['links'];
+  // Ugly hack else the dropdown menu goes away.
+  $output = '<span style="position:relative;">';
+  $active = $variables['heading'];
+
+  // Find the active link and put it atop.
+  // From the code above, there is always one active link.
+  foreach ($links as $link) {
+    if (!empty($link['attributes']['class']) && in_array('active', $link['attributes']['class'])) {
+      $active = $link['title'];
+      break;
+    }
+  }
+
+  if (count($links) > 0) {
+
+    $output .= l($active . ' <span class="caret"></span>', '#', [
+      'html'        => true,
+      'attributes'  => [
+        'class'         => ['dropdown-toggle'],
+        'role'          => 'button',
+        'aria-haspopup' => "true",
+        'aria-expanded' => "false",
+        'data-toggle'   => 'dropdown',
+      ],
+    ]);
+
+    $output .= '<ul class="dropdown-menu">';
+    foreach ($links as $link) {
+      if (isset($link['href'])) {
+        $output .= '<li>' . l($link['title'], $link['href'], $link) . '</li>';
+      }
+    }
+    $output .= '</ul>';
+  }
+  return $output . '</span>';
+}
+
+/**
+ * Overrides theme_links().
+ */
 function badm_links__ucms_dashboard_filter($variables) {
   $links    = $variables['links'];
   $heading  = $variables['heading'];
