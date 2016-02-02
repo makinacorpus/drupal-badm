@@ -21,6 +21,7 @@ settings[gulpifier_nocachebuster] = 0
 settings[gulpifier_js_blacklist][] = toolbar:toolbar.js
 settings[gulpifier_js_blacklist][] = user:user.js
 settings[gulpifier_js_blacklist][] = toolbar:toolbar.js
+settings[gulpifier_whitelist][css][] = filechunk:filechunk.css
 settings[gulpifier_whitelist][css][] = minidialog:minidialog.css
 settings[gulpifier_whitelist][css][] = ucms_contrib:ucms_contrib.css
 settings[gulpifier_whitelist][css][] = ucms_dashboard:ucms_dashboard.css
