@@ -5,6 +5,8 @@
  */
 function badm_form_node_form_alter(&$form, &$form_state) {
 
+  $form['#form_horizontal'] = true;
+
   $form['#pre_render'][] = 'badm_form_node_form_pre_render';
 
   // Create a generic tab for node elements.
