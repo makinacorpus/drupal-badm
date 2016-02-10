@@ -665,3 +665,25 @@ EOT;
 EOT;
 */
 }
+
+/**
+ * Overrides theme_image().
+ *
+ * Why the F*** would they not add classes to images??
+ *
+ * @param $variables
+ * @return string
+ */
+function badm_image($variables) {
+  $attributes = $variables['attributes'];
+  $attributes['src'] = file_create_url($variables['path']);
+
+  foreach (array('width', 'height', 'alt', 'title', 'class') as $key) {
+
+    if (isset($variables[$key])) {
+      $attributes[$key] = $variables[$key];
+    }
+  }
+
+  return '<img' . drupal_attributes($attributes) . ' />';
+}
