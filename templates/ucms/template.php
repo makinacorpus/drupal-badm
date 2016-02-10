@@ -191,3 +191,17 @@ function badm_links__ucms_contrib_actions__icon($variables) {
   }
   return $output;
 }
+
+/**
+ * Alter the dashboard search form.
+ *
+ * @param $form
+ * @param $form_state
+ */
+function badm_form_ucms_dashboard_search_form_alter(&$form, &$form_state) {
+  $form['query']['#prefix'] = '<div class="input-group">';
+  $form['query']['#theme_wrappers'] = [];
+  $form['submit']['#prefix'] = '<span class="input-group-btn">';
+  $form['submit']['#content'] = '<span class="glyphicon glyphicon-search"></span> ' . $form['submit']['#value'];
+  $form['submit']['#suffix'] = '</span></div>';
+}
