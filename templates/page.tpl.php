@@ -1,18 +1,14 @@
-<header id="header" class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <?php echo $breadcrumb; ?>
-      <?php echo render($title_prefix); ?>
-      <h1 class="sr-only"><?php echo $title; ?></h1>
-      <?php echo render($title_suffix); ?>
-    </div>
-  </div>
-</header>
-
 <div id="page" class="container-fluid">
 
   <div class="row">
     <div class="col-md-12">
+
+      <header id="header" class="container-fluid">
+        <?php echo $breadcrumb; ?>
+        <?php echo render($title_prefix); ?>
+        <h1 class="sr-only"><?php echo $title; ?></h1>
+        <?php echo render($title_suffix); ?>
+      </header>
 
       <?php if (!empty($tabs)): ?>
         <?php echo render($tabs); ?>
@@ -58,8 +54,10 @@
 
 </div>
 
-<div class="container">
-  <div id="footer" class="row">
-    <?php echo $feed_icons; ?>
+<? if (!empty($feed_icons)): ?>
+  <div class="container">
+    <div id="footer" class="row">
+      <?php echo $feed_icons; ?>
+    </div>
   </div>
-</div>
+<? endif ?>
