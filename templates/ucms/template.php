@@ -211,12 +211,3 @@ function badm_form_ucms_dashboard_search_form_alter(&$form, &$form_state) {
   $form['submit']['#content'] = '<span class="glyphicon glyphicon-search"></span> ' . $form['submit']['#value'];
   $form['submit']['#suffix'] = '</span></div>';
 }
-
-/**
- * Preprocess theme_ucms_contrib_content_result_grid().
- *
- * @param $vars
- */
-function badm_preprocess_ucms_contrib_content_result_grid(&$vars) {
-  $vars['node_view'] = node_view($vars['node'], $vars['view_mode']);
-}
