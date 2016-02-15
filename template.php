@@ -531,7 +531,7 @@ function badm_preprocess_table(&$variables) {
   // Count header for later, better here than over there.
   $header_count = 0;
   if (!empty($variables['header'])) {
-    foreach ($variables['header'] as $header_cell) {
+    foreach ($variables['header'] as &$header_cell) {
       if (is_array($header_cell)) {
         $header_count += isset($header_cell['colspan']) ? $header_cell['colspan'] : 1;
       } else {
@@ -547,6 +547,21 @@ function badm_preprocess_table(&$variables) {
     $variables['sortheader'] = tablesort_init($variables['header']);
   } else {
     $variables['sortheader'] = [];
+  }
+
+  if (!empty($variables['header'])) {
+    foreach ($variables['header'] as &$header_cell) {
+      $header_cell = tablesort_header($header_cell, $variables['header'], $variables['sortheader']);
+    }
+  }
+  if (!empty($variables['rows'])) {
+    foreach ($variables['rows'] as &$row) {
+      $i = 0;
+      foreach ($row as &$cell) {
+        $cell = tablesort_cell($cell, $variables['header'], $variables['sortheader'], $i);
+        $i++;
+      }
+    }
   }
 
   // Add the 'empty' row message if available.

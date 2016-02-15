@@ -1,0 +1,23 @@
+{% if messages %}
+  {{ messages }}
+{% endif %}
+<div id="media-browser-page-wrapper">
+  <div id="media-browser-page">
+    {{ title_prefix }}
+    {{ title_suffix }}
+    <div id="media-browser-tabset">
+      <div id="branding" class="clearfix">
+        <div id="media-tabs-wrapper">
+          {{ page.content.system_main.tabset.tabs }}
+        </div>
+      </div>
+      {{ page.content.system_main.tabset.panes }}
+    </div>
+  </div>
+</div>
+
+<script language="javascript">
+  var dialogContent = jQuery('#media-browser-page');
+</script>
+
+{{ page.content.system_main|without(['tabset','title']) }}

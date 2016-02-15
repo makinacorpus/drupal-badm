@@ -1,0 +1,26 @@
+{% if total_count %}
+  <div class="text">
+    ({{ "<strong>@a</strong> of @b"|t({ '@a': total_count, '@b': real_total }) }})
+  </div>
+{% endif %}
+{% if list %}
+  <div class="text">
+    {{ "You have no messages."|t }}
+  </div>
+{% else %}
+  {% for item in list %}
+    {% if item.link %}<a href="{{ item.link }}">{% endif %}
+    <div class="media notification notification-{{ item.type }}{% if item.unread %} notification-unread{% endif %}">
+      <div class="media-left">
+        {{ item.image }}
+      </div>
+      <div class="media-body">
+        {{ item.text }}
+        <span class="time">
+          {{ item.time|interval }}
+        </span>
+      </div>
+    </div>
+    {% if item.link %}</a>{% endif %}
+  {% endfor %}
+{% endif %}

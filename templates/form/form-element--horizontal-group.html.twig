@@ -1,0 +1,30 @@
+<div{{ attributes|attributes }}>
+
+  {% if label and label_show %}
+    <label class="control-label col-sm-3 col-md-2" for="{{ id }}">{{ label }}</label>
+    <div class="col-sm-9 col-md-10">
+  {% else %}
+    {% if label %}
+      <label class="sr-only" for="{{ id }}">{{ label }}</label>
+    {% endif %}
+    <div class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10">
+  {% endif %}
+
+    <div class="form-inline">
+      <div class="input-group">
+        {% if prefix %}
+          <span class="input-group-addon">
+            {{ prefix }}
+          </span>
+        {% endif %}
+        {{ input }}
+        {% if suffix %}
+          <span class="input-group-addon">
+            {{ suffix }}
+          </span>
+        {% endif %}
+      </div>
+      {% if description %}<p class="help-block">{{ description }}</p>{% endif %}
+    </div>
+  </div>
+</div>

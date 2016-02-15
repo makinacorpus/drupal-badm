@@ -1,0 +1,18 @@
+<div class="media">
+  <div class="media-left pull-left">
+    {% if content.image %}
+      {{ content.image }}
+    {% else %}
+      <div class="media-object">
+      </div>
+    {% endif %}
+  </div>
+  <div class="media-body">
+    {{ title_prefix }}
+    <h4 class="media-heading">
+      <a href="{{ node_url }}">{{ title }}</a>
+    </h4>
+    {{ title_suffix }}
+    {% if content.body %}{{ content.body }}{% endif %}
+  </div>
+</div>

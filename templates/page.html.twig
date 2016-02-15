@@ -1,0 +1,63 @@
+<div id="page" class="container-fluid">
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <header id="header" class="container-fluid">
+        {{ breadcrumb }}
+        {{ title_prefix }}
+        <h1 class="sr-only">{{ title }}</h1>
+        {{ title_suffix }}
+      </header>
+
+      {% if tabs %}
+        {{ tabs }}
+      {% endif %}
+
+      {% if action_links %}
+        <div id="page-actions">
+          {{ action_links }}
+        </div>
+      {% endif %}
+
+      {% if messages %}
+        {{ messages }}
+      {% endif %}
+
+      {% if page.help %}
+        <div class="panel panel-default">
+          <div class="panel-body alert-info">
+            {{ page.help }}
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+  <div class="row">
+    {% if page.sidebar_first %}
+      <div id="content" class="col-md-9">
+        <a id="main-content" class="sr-only"></a>
+        {{ page.content }}
+      </div>
+      <div id="sidebar" class="col-md-3">
+        {{ page.sidebar_first }}
+      </div>
+    {% else %}
+      <div id="main" class="col-md-12">
+        <a id="main-content" class="sr-only"></a>
+        {{ page.content }}
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+
+{% if feed_icons %}
+  <div class="container">
+    <div id="footer" class="row">
+      {{ feed_icons }}
+    </div>
+  </div>
+{% endif %}

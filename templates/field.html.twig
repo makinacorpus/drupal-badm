@@ -1,0 +1,6 @@
+{% if not label_hidden %}
+  <span class="field-label"{{ title_attributes }}>{{ label }}:&nbsp;</span>
+{% endif %}
+{% for delta, item in items %}
+  {{ item }}
+{% endfor %}

@@ -1,0 +1,14 @@
+<div id="page" class="container-fluid fix-iframe">
+  {% if messages %}
+    <div class="row">
+      <div class="col-md-12">
+        {{ messages }}
+      </div>
+    </div>
+  {% endif %}
+  <div class="row">
+    <div id="content" class="col-md-12">
+      {{ page.content }}
+    </div>
+  </div>
+</div>

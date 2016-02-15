@@ -1,0 +1,90 @@
+<table{{ attributes|attributes }}>
+
+  {% if caption %}
+    <caption>
+      {{ caption }}
+    </caption>
+  {% endif %}
+
+  {% if colgroups %}
+    {% for colgroup in colgroups %}
+
+      {% set attributes = [] %}
+      {% if colgroup.data %}
+        {% for key, value in colgroup %}
+          {% if key == 'data' %}
+            {% set cols = value %}
+          {% else %}
+            {% set attributes = attributes|merge({key: value}) %}
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% set cols = colgroup %}
+      {% endif %}
+
+      {% if cols is iterable %}
+        <colgroup{{ attributes|attributes }}>
+          {% for col in cols %}
+            <col{{ col|attributes }}/>
+          {% endfor %}
+        </colgroup>
+      {% else %}
+        <colgroup{{ attributes|attributes }}></colgroup>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% if header|length %}
+    <thead>
+      <tr>
+        {% for cell in header %}
+
+          {% if cell is not iterable %}
+            {% set data = cell %}
+            {% set cell = [] %}
+          {% endif %}
+
+          <th{{ cell|without(['data','header'])|attributes }}>
+            {{ data }}
+          </th>
+        {% endfor %}
+      </tr>
+    </thead>
+  {% endif %}
+
+  {% if rows|length %}
+    <tbody>
+      {% for row in rows %}
+
+        {% set attributes = [] %}
+        {% if row.data %}
+          {% for key, value in row %}
+            {% if key == 'data' %}
+              {% set cells = value %}
+            {% else %}
+              {% set attributes = attributes|merge({key: value}) %}
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          {% set cells = row %}
+        {% endif %}
+
+        {% if cells|length %}
+          <tr{{ attributes|attributes }}>
+            {% for cell in cells %}
+
+              {% if cell is not iterable %}
+                {% set data = cell %}
+                {% set cell = [] %}
+              {% endif %}
+
+              <td{{ cell|without(['data','header'])|attributes }}>
+                {{ data }}
+              </td>
+            {% endfor %}
+          </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  {% endif %}
+</table>

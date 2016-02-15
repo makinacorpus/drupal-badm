@@ -1,6 +1,8 @@
 name = Bootstrap Admin
 core = 7.x
 
+engine = twig
+
 regions[content] = Content
 regions[help] = Help
 regions[page_top] = Page top

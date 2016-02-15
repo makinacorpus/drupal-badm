@@ -1,0 +1,16 @@
+{% if not nowrapper %}<div {{ attributes|attributes }}>{% endif %}
+
+  {% if label %}
+    {% if label_show %}
+      <label class="control-label" for="{{ id }}">{{ label }}</label>
+    {% else %}
+      <label class="sr-only" for="{{ id }}">{{ label }}</label>
+    {% endif %}
+  {% endif %}
+
+  {% if prefix %}{{ prefix }}{% endif %}
+  {{ input }}
+  {% if suffix %}{{ suffix }}{% endif %}
+  {% if description %}<p class="help-block">{{ description }}</p>{% endif %}
+
+{% if not nowrapper %}</div>{% endif %}

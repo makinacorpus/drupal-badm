@@ -1,0 +1,14 @@
+<nav id="toolbar" class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse" aria-expanded="false">
+        <span class="sr-only">{{ "Toggle navigation"|t }}</span>
+      </button>
+      <a class="navbar-brand" href="{{ url('admin') }}">
+        <span aria-hidden="true" class="glyphicon glyphicon-cog"></span>
+        <span class="sr-only">{{ "Administration"|t }}</span>
+      </a>
+    </div>
+    {{ toolbar.toolbar_menu }}
+  </div>
+</nav>

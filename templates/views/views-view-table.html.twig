@@ -1,0 +1,27 @@
+<table class="table table-striped table-condensed {% if classes %}{{ classes }}{% endif %}"{{ attributes }}>
+  {% if title or caption %}
+    <caption>{{ caption ~ title }}</caption>
+  {% endif %}
+  {% if header %}
+    <thead>
+    <tr>
+      {% for field, label in header %}
+        <th {% if header_classes[field] %}class="{{ header_classes[field] }}"{% endif %}>
+          {{ label }}
+        </th>
+      {% endfor %}
+    </tr>
+    </thead>
+  {% endif %}
+  <tbody>
+  {% for row_count, row in rows %}
+    <tr {% if row_classes[row_count] %}class="{{ row_classes[row_count]|join(' ') }}"{% endif %}>
+      {% for field, content in row %}
+        <td {% if field_classes[field][row_count] %}class="{{ field_classes[field][row_count] }}"{% endif %}{{ field_attributes[field][row_count]|attributes }}>
+          {{ content }}
+        </td>
+      {% endfor %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

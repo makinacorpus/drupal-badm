@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="{{ language.language }}" version="XHTML+RDFa 1.0" dir="{{ language.dir }}">
+<head profile="{{ grddl_profile }}">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{ head }}
+<title>{{ head_title }}</title>
+{{ styles }}
+{{ scripts }}
+</head>
+<body class="{{ classes }}" {{ attributes }}>
+  <a id="skip-link" href="#main-content" class="sr-only">{{ 'Skip to main content'|t }}</a>
+  {{ page_top }}
+  {{ page }}
+  {{ page_bottom }}
+</body>
+</html>
