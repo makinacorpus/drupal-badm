@@ -4,6 +4,7 @@
       {{ content.image }}
     {% else %}
       <div class="media-object">
+        {{ content|without(['body','links','comments']) }}
       </div>
     {% endif %}
   </div>
