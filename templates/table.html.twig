@@ -10,6 +10,7 @@
     {% for colgroup in colgroups %}
 
       {% set attributes = [] %}
+      {% set cols = [] %}
       {% if colgroup.data %}
         {% for key, value in colgroup %}
           {% if key == 'data' %}
@@ -42,6 +43,8 @@
           {% if cell is not iterable %}
             {% set data = cell %}
             {% set cell = [] %}
+          {% else %}
+            {% set data = cell.data %}
           {% endif %}
 
           <th{{ cell|without(['data','header'])|attributes }}>
@@ -57,6 +60,7 @@
       {% for row in rows %}
 
         {% set attributes = [] %}
+        {% set cells = [] %}
         {% if row.data %}
           {% for key, value in row %}
             {% if key == 'data' %}
