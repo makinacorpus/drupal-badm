@@ -80,6 +80,8 @@
               {% if cell is not iterable %}
                 {% set data = cell %}
                 {% set cell = [] %}
+              {% else %}
+                {% set data = cell.data %}
               {% endif %}
 
               <td{{ cell|without(['data','header'])|attributes }}>
