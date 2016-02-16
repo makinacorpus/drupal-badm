@@ -4,7 +4,9 @@
     <div class="col-md-12">
 
       <header id="header" class="container-fluid">
-        {{ breadcrumb }}
+        {% if logged_in %}
+          {{ breadcrumb }}
+        {% endif %}
         {{ title_prefix }}
         <h1 class="sr-only">{{ title }}</h1>
         {{ title_suffix }}
