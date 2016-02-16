@@ -199,6 +199,36 @@ function badm_links__ucms_contrib_actions__icon($variables) {
 }
 
 /**
+ * Overrides theme_links().
+ *
+ * @param $variables
+ * @return string
+ */
+function badm_links__main_menu($variables) {
+  $output = '';
+  if (count($variables['links']) > 0) {
+    $output .= '<ul class="nav navbar-nav navbar-right">';
+    foreach ($variables['links'] as $link) {
+      if (isset($link['icon'])) {
+        $icon = '<span aria-hidden="true" class="glyphicon glyphicon-' . $link['icon'] . '"></span> ';
+        $link['title'] = $icon . check_plain($link['title']);
+        $link['html'] = TRUE;
+      }
+      // Append active class.
+      if (!empty($link['attributes']) && in_array('active-trail', $link['attributes']['class'])) {
+        $output .= '<li class="active">';
+      }
+      else {
+        $output .= '<li>';
+      }
+      $output .= l($link['title'], $link['href'], $link) . '</li>';
+    }
+    $output .= '</ul>';
+  }
+  return $output;
+}
+
+/**
  * Alter the dashboard search form.
  *
  * @param $form
