@@ -564,6 +564,11 @@ function badm_preprocess_table(&$vars) {
     }
   }
 
+  // Add the 'empty' row message if available.
+  if ($vars['empty'] && empty($vars['rows'])) {
+    $vars['rows'][] = [['data' => $vars['empty'], 'colspan' => $header_count, 'class' => ['empty', 'message']]];
+  }
+
   // Manage main attributes
   if (isset($vars['colgroups'])) {
     _badm_extract_data_from_attributes($vars, 'colgroups');
@@ -576,28 +581,22 @@ function badm_preprocess_table(&$vars) {
   }
 
   // Manage cells attributes, because they are deeper.
-  $temp_real_value = NULL;
   $vars['cells_attributes'] = [];
   foreach ($vars['rows'] as $row_index => &$row) {
     foreach ($row as $cell_index => &$cell) {
       $vars['cells_attributes'][$row_index][$cell_index] = [];
       if (isset($cell['data'])) {
+        $temp_real_value = '';
         foreach ($cell as $key => $value) {
           if ($key == 'data') {
             $temp_real_value = $value;
-          }
-          else {
+          } else {
             $vars['cells_attributes'][$row_index][$cell_index][$key] = $value;
           }
         }
         $cell = $temp_real_value;
       }
     }
-  }
-
-  // Add the 'empty' row message if available.
-  if ($vars['empty'] && empty($vars['rows'])) {
-    $vars['rows'][] = [['data' => $vars['empty'], 'colspan' => $header_count, 'class' => ['empty', 'message']]];
   }
 
   $vars['theme_hook_suggestions'][] = 'table';
@@ -610,11 +609,11 @@ function badm_preprocess_table(&$vars) {
  * @param $name
  */
 function _badm_extract_data_from_attributes(&$vars, $name) {
-  $temp_real_value = NULL;
   $vars[$name . '_attributes'] = [];
   foreach ($vars[$name] as $index => &$item) {
     $vars[$name . '_attributes'][$index] = [];
     if (isset($item['data'])) {
+      $temp_real_value = '';
       foreach ($item as $key => $value) {
         if ($key == 'data') {
           $temp_real_value = $value;
