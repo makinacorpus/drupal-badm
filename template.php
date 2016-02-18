@@ -26,6 +26,18 @@ require_once __DIR__ . '/templates/ucms/template.php';
 require_once __DIR__ . '/templates/stupidmodules/template.php';
 
 /**
+ * Implements hook_theme().
+ */
+function badm_theme() {
+  return array(
+    'description_list' => array(
+      'variables' => array('items' => []),
+      'template' => 'templates/description-list',
+    ),
+  );
+}
+
+/**
  * Implements hook_preprocess_HOOK().
  */
 function badm_preprocess_page(&$variables) {
