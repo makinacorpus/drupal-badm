@@ -583,18 +583,20 @@ function badm_preprocess_table(&$vars) {
   // Manage cells attributes, because they are deeper.
   $vars['cells_attributes'] = [];
   foreach ($vars['rows'] as $row_index => &$row) {
-    foreach ($row as $cell_index => &$cell) {
-      $vars['cells_attributes'][$row_index][$cell_index] = [];
-      if (isset($cell['data'])) {
-        $temp_real_value = '';
-        foreach ($cell as $key => $value) {
-          if ($key == 'data') {
-            $temp_real_value = $value;
-          } else {
-            $vars['cells_attributes'][$row_index][$cell_index][$key] = $value;
+    if (is_array($row)) {
+      foreach ($row as $cell_index => &$cell) {
+        $vars['cells_attributes'][$row_index][$cell_index] = [];
+        if (isset($cell['data'])) {
+          $temp_real_value = '';
+          foreach ($cell as $key => $value) {
+            if ($key == 'data') {
+              $temp_real_value = $value;
+            } else {
+              $vars['cells_attributes'][$row_index][$cell_index][$key] = $value;
+            }
           }
+          $cell = $temp_real_value;
         }
-        $cell = $temp_real_value;
       }
     }
   }
@@ -612,10 +614,10 @@ function _badm_extract_data_from_attributes(&$vars, $name) {
   $vars[$name . '_attributes'] = [];
   foreach ($vars[$name] as $index => &$item) {
     $vars[$name . '_attributes'][$index] = [];
-    if (isset($item['data'])) {
+    if (is_array($item) && (isset($item['data']) || ($name == 'header' && count(element_properties($item)) == 0))) {
       $temp_real_value = '';
       foreach ($item as $key => $value) {
-        if ($key == 'data') {
+        if ($key === 'data') {
           $temp_real_value = $value;
         }
         else {
