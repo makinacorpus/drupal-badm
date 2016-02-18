@@ -7,15 +7,15 @@
   {% endif %}
 
   {% if colgroups %}
-    {% for colgroup in colgroups %}
+    {% for key, colgroup in colgroups %}
       {% if colgroup is iterable %}
-        <colgroup{{ colgroups_attributes[loop.index0]|attributes }}>
+        <colgroup{{ colgroups_attributes[key]|attributes }}>
           {% for col in colgroup %}
             <col{{ col|attributes }}/>
           {% endfor %}
         </colgroup>
       {% else %}
-        <colgroup{{ colgroups_attributes[loop.index0]|attributes }}></colgroup>
+        <colgroup{{ colgroups_attributes[key]|attributes }}></colgroup>
       {% endif %}
     {% endfor %}
   {% endif %}
@@ -23,8 +23,8 @@
   {% if header|length %}
     <thead>
       <tr>
-        {% for cell in header %}
-          <th{{ header_attributes[loop.index0]|attributes }}>
+        {% for key, cell in header %}
+          <th{{ header_attributes[key]|attributes }}>
             {{ cell }}
           </th>
         {% endfor %}
@@ -34,11 +34,11 @@
 
   {% if rows|length %}
     <tbody>
-      {% for row in rows %}
+      {% for key1, row in rows %}
         {% if row|length %}
-          <tr{{ rows_attributes[loop.index0]|attributes }}>
-            {% for cell in row %}
-              <td{{ cells_attributes[loop.parent.loop.index0][loop.index0]|attributes }}>
+          <tr{{ rows_attributes[key1]|attributes }}>
+            {% for key2, cell in row %}
+              <td{{ cells_attributes[key1][key2]|attributes }}>
                 {{ cell }}
               </td>
             {% endfor %}
