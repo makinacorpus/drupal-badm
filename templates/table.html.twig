@@ -8,29 +8,14 @@
 
   {% if colgroups %}
     {% for colgroup in colgroups %}
-
-      {% set attributes = [] %}
-      {% set cols = [] %}
-      {% if colgroup.data %}
-        {% for key, value in colgroup %}
-          {% if key == 'data' %}
-            {% set cols = value %}
-          {% else %}
-            {% set attributes = attributes|merge({key: value}) %}
-          {% endif %}
-        {% endfor %}
-      {% else %}
-        {% set cols = colgroup %}
-      {% endif %}
-
-      {% if cols is iterable %}
-        <colgroup{{ attributes|attributes }}>
-          {% for col in cols %}
+      {% if colgroup is iterable %}
+        <colgroup{{ colgroups_attributes[loop.index0]|attributes }}>
+          {% for col in colgroup %}
             <col{{ col|attributes }}/>
           {% endfor %}
         </colgroup>
       {% else %}
-        <colgroup{{ attributes|attributes }}></colgroup>
+        <colgroup{{ colgroups_attributes[loop.index0]|attributes }}></colgroup>
       {% endif %}
     {% endfor %}
   {% endif %}
@@ -39,16 +24,8 @@
     <thead>
       <tr>
         {% for cell in header %}
-
-          {% if cell is not iterable %}
-            {% set data = cell %}
-            {% set cell = [] %}
-          {% else %}
-            {% set data = cell.data %}
-          {% endif %}
-
-          <th{{ cell|without(['data','header'])|attributes }}>
-            {{ data }}
+          <th{{ header_attributes[loop.index0]|attributes }}>
+            {{ cell }}
           </th>
         {% endfor %}
       </tr>
@@ -58,34 +35,11 @@
   {% if rows|length %}
     <tbody>
       {% for row in rows %}
-
-        {% set attributes = [] %}
-        {% set cells = [] %}
-        {% if row.data %}
-          {% for key, value in row %}
-            {% if key == 'data' %}
-              {% set cells = value %}
-            {% else %}
-              {% set attributes = attributes|merge({key: value}) %}
-            {% endif %}
-          {% endfor %}
-        {% else %}
-          {% set cells = row %}
-        {% endif %}
-
-        {% if cells|length %}
-          <tr{{ attributes|attributes }}>
-            {% for cell in cells %}
-
-              {% if cell is not iterable %}
-                {% set data = cell %}
-                {% set cell = [] %}
-              {% else %}
-                {% set data = cell.data %}
-              {% endif %}
-
-              <td{{ cell|without(['data','header'])|attributes }}>
-                {{ data }}
+        {% if row|length %}
+          <tr{{ rows_attributes[loop.index0]|attributes }}>
+            {% for cell in row %}
+              <td{{ cells_attributes[loop.parent.loop.index0][loop.index0]|attributes }}>
+                {{ cell }}
               </td>
             {% endfor %}
           </tr>

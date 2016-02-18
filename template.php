@@ -519,19 +519,19 @@ function badm_links($variables) {
 /**
  * Implements hook_preprocess_HOOK().
  */
-function badm_preprocess_table(&$variables) {
+function badm_preprocess_table(&$vars) {
 
   // Make it bootstrap yeah!
-  $variables['attributes']['class'][] = 'table';
-  if (empty($variables['attributes']['no_strip'])) {
-    $variables['attributes']['class'][] = 'table-striped';
+  $vars['attributes']['class'][] = 'table';
+  if (empty($vars['attributes']['no_strip'])) {
+    $vars['attributes']['class'][] = 'table-striped';
   }
-  $variables['attributes']['class'][] = 'table-condensed';
+  $vars['attributes']['class'][] = 'table-condensed';
 
   // Count header for later, better here than over there.
   $header_count = 0;
-  if (!empty($variables['header'])) {
-    foreach ($variables['header'] as &$header_cell) {
+  if (!empty($vars['header'])) {
+    foreach ($vars['header'] as &$header_cell) {
       if (is_array($header_cell)) {
         $header_count += isset($header_cell['colspan']) ? $header_cell['colspan'] : 1;
       } else {
@@ -541,35 +541,91 @@ function badm_preprocess_table(&$variables) {
   }
 
   // Need this in template.
-  $variables['header_count'] = $header_count;
+  $vars['header_count'] = $header_count;
 
   if ($header_count) {
-    $variables['sortheader'] = tablesort_init($variables['header']);
+    $vars['sortheader'] = tablesort_init($vars['header']);
   } else {
-    $variables['sortheader'] = [];
+    $vars['sortheader'] = [];
   }
 
-  if (!empty($variables['header'])) {
-    foreach ($variables['header'] as &$header_cell) {
-      $header_cell = tablesort_header($header_cell, $variables['header'], $variables['sortheader']);
+  if (!empty($vars['header'])) {
+    foreach ($vars['header'] as &$header_cell) {
+      $header_cell = tablesort_header($header_cell, $vars['header'], $vars['sortheader']);
     }
   }
-  if (!empty($variables['rows'])) {
-    foreach ($variables['rows'] as &$row) {
+  if (!empty($vars['rows'])) {
+    foreach ($vars['rows'] as &$row) {
       $i = 0;
       foreach ($row as &$cell) {
-        $cell = tablesort_cell($cell, $variables['header'], $variables['sortheader'], $i);
+        $cell = tablesort_cell($cell, $vars['header'], $vars['sortheader'], $i);
         $i++;
       }
     }
   }
 
-  // Add the 'empty' row message if available.
-  if ($variables['empty'] && empty($variables['rows'])) {
-    $variables['rows'][] = [['data' => $variables['empty'], 'colspan' => $header_count, 'class' => ['empty', 'message']]];
+  // Manage main attributes
+  if (isset($vars['colgroups'])) {
+    _badm_extract_data_from_attributes($vars, 'colgroups');
+  }
+  if (isset($vars['header'])) {
+    _badm_extract_data_from_attributes($vars, 'header');
+  }
+  if (isset($vars['rows'])) {
+    _badm_extract_data_from_attributes($vars, 'rows');
   }
 
-  $variables['theme_hook_suggestions'][] = 'table';
+  // Manage cells attributes, because they are deeper.
+  $temp_real_value = NULL;
+  $vars['cells_attributes'] = [];
+  foreach ($vars['rows'] as $row_index => &$row) {
+    foreach ($row as $cell_index => &$cell) {
+      $vars['cells_attributes'][$row_index][$cell_index] = [];
+      if (isset($cell['data'])) {
+        foreach ($cell as $key => $value) {
+          if ($key == 'data') {
+            $temp_real_value = $value;
+          }
+          else {
+            $vars['cells_attributes'][$row_index][$cell_index][$key] = $value;
+          }
+        }
+        $cell = $temp_real_value;
+      }
+    }
+  }
+
+  // Add the 'empty' row message if available.
+  if ($vars['empty'] && empty($vars['rows'])) {
+    $vars['rows'][] = [['data' => $vars['empty'], 'colspan' => $header_count, 'class' => ['empty', 'message']]];
+  }
+
+  $vars['theme_hook_suggestions'][] = 'table';
+}
+
+/**
+ * Extract 'data' key and create another variable with other attributes.
+ *
+ * @param $vars
+ * @param $name
+ */
+function _badm_extract_data_from_attributes(&$vars, $name) {
+  $temp_real_value = NULL;
+  $vars[$name . '_attributes'] = [];
+  foreach ($vars[$name] as $index => &$item) {
+    $vars[$name . '_attributes'][$index] = [];
+    if (isset($item['data'])) {
+      foreach ($item as $key => $value) {
+        if ($key == 'data') {
+          $temp_real_value = $value;
+        }
+        else {
+          $vars[$name . '_attributes'][$index][$key] = $value;
+        }
+      }
+      $item = $temp_real_value;
+    }
+  }
 }
 
 /**
