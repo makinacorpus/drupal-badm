@@ -252,7 +252,15 @@ EOT
     } else {
       $links = '';
     }
-    $output .= '<ol class="breadcrumb">' . $links  . '<li class="active">' . drupal_get_title() . '</li></ol>';
+
+    if (($item = menu_get_item()) && ($item['type'] == MENU_LOCAL_TASK)) {
+      _menu_translate($item, $item['original_map']);
+      $current = $item['title'];
+    } else {
+      $current = drupal_get_title();
+    }
+
+    $output .= '<ol class="breadcrumb">' . $links  . '<li class="active">' . $current . '</li></ol>';
     return $output;
   }
 }
