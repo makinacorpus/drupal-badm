@@ -44,18 +44,10 @@
 }
 
 #dashboard {
-  .panel-body {
-    .scrolling {
+  //noinspection CssOptimizeSimilarProperties
+  .scrolling {
       overflow: auto;
       max-height: 250px;
-      background:
-		/* Shadow covers */
-		linear-gradient(white 30%, rgba(255,255,255,0)),
-		linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
-
-		/* Shadows */
-		radial-gradient(50% 0, farthest-side, rgba(0,0,0,.2), rgba(0,0,0,0)),
-		radial-gradient(50% 100%,farthest-side, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
 	  background:
 		/* Shadow covers */
 		linear-gradient(white 30%, rgba(255,255,255,0)),
@@ -70,6 +62,23 @@
 
       /* Opera doesn't support this in the shorthand */
       background-attachment: local, local, scroll, scroll;
+  }
+  .panel-body {
+    min-height: 280px;
+  }
+  .with-actions .panel-body {
+    min-height: 225px;
+  }
+  .panel-body {
+    min-height: 280px;
+  }
+  .with-actions .panel-body {
+    min-height: 225px;
+  }
+
+  #porlet-ucms_site_sites_portlet {
+    table td:nth-of-type(2) {
+      white-space: nowrap;
     }
   }
 }
