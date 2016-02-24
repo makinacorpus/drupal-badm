@@ -3,7 +3,7 @@
     ({{ "<strong>@a</strong> of @b"|t({ '@a': total_count, '@b': real_total }) }})
   </div>
 {% endif %}
-{% if list %}
+{% if not list %}
   <div class="text">
     {{ "You have no messages."|t }}
   </div>
