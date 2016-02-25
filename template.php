@@ -38,6 +38,13 @@ function badm_theme() {
 }
 
 /**
+ * Implements hook_preprocess().
+ */
+function badm_preprocess(&$vars) {
+  $vars['logged_in'] = \Drupal::currentUser()->isAuthenticated();
+}
+
+/**
  * Implements hook_preprocess_HOOK().
  */
 function badm_preprocess_page(&$variables) {
