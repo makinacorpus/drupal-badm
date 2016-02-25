@@ -27,6 +27,7 @@ settings[gulpifier_whitelist][css][] = unoderef:unoderef.css
 settings[gulpifier_whitelist][css][] = minidialog:minidialog.css
 settings[gulpifier_whitelist][css][] = ucms_contrib:ucms_contrib.css
 settings[gulpifier_whitelist][css][] = ucms_label:js/select2.min.css
+settings[gulpifier_whitelist][css][] = ucms_label:js/select2-bootstrap.min.css
 settings[gulpifier_whitelist][css][] = ucms_dashboard:ucms_dashboard.css
 settings[gulpifier_whitelist][css][] = gantt:assets/jQuery.Gantt/css/style.css
 settings[gulpifier_whitelist][css][] = badm:jquery-ui-bootstrap/jquery-ui-1.10.3.custom.css

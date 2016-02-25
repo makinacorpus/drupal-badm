@@ -9,13 +9,14 @@ function badm_form_node_form_alter(&$form, &$form_state) {
 
   $form['#pre_render'][] = 'badm_form_node_form_pre_render';
 
-  // Create a generic tab for node elements.
-  $form['node_form_orphans'] = array(
+  // Create a generic tab for node elements, but desactivate it for now.
+  $form['node_form_orphans'] = [
     '#type'   => 'fieldset',
     '#title'  => t("Content"),
     '#weight' => -1000,
     '#group'  => 'additional_settings',
-  );
+    '#access' => FALSE,
+  ];
 
   // Also this stupid delete button should not trigger any validation
   // of the form. Still don't get why Drupal does not already do this.
@@ -31,7 +32,10 @@ function badm_form_node_form_alter(&$form, &$form_state) {
  */
 function badm_form_node_form_pre_render($form) {
 
-  if (!isset($form['additional_settings']) || (isset($form['additional_settings']['#access']) && !$form['additional_settings']['#access'])) {
+  if (!isset($form['additional_settings'])
+    || (isset($form['additional_settings']['#access']) && !$form['additional_settings']['#access'])
+    || isset($form['additional_settings']['additional_settings__active_tab']) && count(element_children($form['additional_settings']['additional_settings__active_tab'])) == 0
+  ) {
     return $form;
   }
 
@@ -74,6 +78,8 @@ function badm_form_node_form_pre_render($form) {
   }
 
   uasort($form['node_form_orphans'], 'element_sort');
+  // Activate tab.
+  $form['node_form_orphans']['#access'] = TRUE;
 
   return $form;
 }

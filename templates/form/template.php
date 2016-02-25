@@ -96,6 +96,26 @@ function _badm_vertical_tabs_recursion(&$form, $vertical_tabs = []) {
 }
 
 /**
+ * Override theme_vertical_tabs().
+ */
+function badm_vertical_tabs($variables) {
+  $element = $variables['element'];
+
+  // Only add tabs if there more than 1 (there's a group key too, that's not a tab).
+
+  if (count(element_children($variables['element'])) > 2) {
+    // Add required JavaScript and Stylesheet.
+    drupal_add_library('system', 'drupal.vertical-tabs');
+
+    $output = '<h2 class="element-invisible">' . t('Vertical Tabs') . '</h2>';
+    $output .= '<div class="vertical-tabs-panes">' . $element['#children'] . '</div>';
+    return $output;
+  }
+  return $element['#children'];
+}
+
+
+/**
  * Tell if the current form is horizontal
  */
 function _badm_form_is_horizontal($set = null) {
@@ -440,6 +460,14 @@ function badm_preprocess_textfield(&$variables) {
       $element['#title_display'] = 'invisible';
     }
   }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function badm_preprocess_textarea(&$variables) {
+  $element = &$variables['element'];
+  $element['#attributes']['class'][] = 'form-control';
 }
 
 /**
