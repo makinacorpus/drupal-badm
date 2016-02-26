@@ -36,7 +36,13 @@ function badm_theme() {
     ),
   );
 }
-
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function badm_theme_registry_alter(&$theme_registry) {
+  // Add an empty_list variable
+  $theme_registry['item_list']['variables']['empty_list'] = '';
+}
 /**
  * Implements hook_preprocess().
  */
@@ -785,4 +791,17 @@ function badm_image($variables) {
   }
 
   return '<img' . drupal_attributes($attributes) . ' />';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function badm_preprocess_item_list(&$vars) {
+  if (empty($vars['items']) && $vars['empty_list']) {
+    // Force class
+    if (!isset($vars['attributes']['class']) || array_search('list-unstyled', $vars['attributes']['class']) === FALSE) {
+      $vars['attributes']['class'][] = 'list-unstyled';
+    }
+    $vars['items'][] = $vars['empty_list'];
+  }
 }
