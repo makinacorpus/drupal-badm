@@ -23,6 +23,8 @@ function badm_form_node_form_alter(&$form, &$form_state) {
   if (isset($form['actions']['delete'])) {
     $form['actions']['delete']['#limit_validation_errors'] = array();
   }
+
+  $form['actions']['#weight'] = 1000;
 }
 
 /**
