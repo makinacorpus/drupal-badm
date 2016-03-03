@@ -619,7 +619,7 @@ function badm_preprocess_table(&$vars) {
     if (is_array($row)) {
       foreach ($row as $cell_index => &$cell) {
         $vars['cells_attributes'][$row_index][$cell_index] = [];
-        if (isset($cell['data'])) {
+        if (isset($cell['data']) || (is_array($cell) && count(element_properties($cell)) == 0)) {
           $temp_real_value = '';
           foreach ($cell as $key => $value) {
             if ($key == 'data') {
