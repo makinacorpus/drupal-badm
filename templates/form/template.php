@@ -170,11 +170,14 @@ function badm_form_alter(&$form, &$form_state, $form_id) {
   if (isset($form['actions']) && isset($_GET['destination']) && !isset($form['actions']['cancel']) && !isset($form['cancel'])) {
     $destination = drupal_parse_url($_GET['destination']);
     $path = $destination['path'];
-    $form['actions']['cancel']['#markup'] = l("Cancel", $path, [
-      'query'       => $destination['query'],
-      'fragment'    => $destination['fragment'],
-      'attributes'  => ['class' => ['btn', 'btn-default']]
-    ]);
+    $form['actions']['cancel'] = [
+      '#markup' => l("Cancel", $path, [
+        'query'       => $destination['query'],
+        'fragment'    => $destination['fragment'],
+        'attributes'  => ['class' => ['btn', 'btn-default']]
+      ]),
+      '#weight' => 100, // Ensures the cancel button is at the left of others
+    ];
   }
 }
 
