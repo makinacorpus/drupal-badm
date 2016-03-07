@@ -26,28 +26,19 @@ require_once __DIR__ . '/templates/ucms/template.php';
 require_once __DIR__ . '/templates/stupidmodules/template.php';
 
 /**
- * Implements hook_theme().
- */
-function badm_theme() {
-  return array(
-    'description_list' => array(
-      'variables' => array('items' => []),
-      'template' => 'templates/description-list',
-    ),
-  );
-}
-/**
  * Implements hook_theme_registry_alter().
  */
 function badm_theme_registry_alter(&$theme_registry) {
   // Add an empty_list variable
   $theme_registry['item_list']['variables']['empty_list'] = '';
 }
+
 /**
  * Implements hook_preprocess().
  */
 function badm_preprocess(&$vars) {
-  $vars['logged_in'] = \Drupal::currentUser()->isAuthenticated();
+  $vars['logged_in'] = \Drupal::currentUser()
+                              ->isAuthenticated();
 }
 
 /**
