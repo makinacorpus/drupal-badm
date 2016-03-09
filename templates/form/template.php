@@ -130,7 +130,10 @@ function _badm_form_is_horizontal($set = null) {
  * Generic form alter.
  */
 function badm_form_alter(&$form, &$form_state, $form_id) {
+  $form['#after_build'][] = 'badm_form_after_build';
+}
 
+function badm_form_after_build(&$form, &$form_state) {
   if (isset($form['#form_horizontal'])) {
     _badm_form_is_horizontal($form['#form_horizontal']);
   } else {
@@ -179,6 +182,7 @@ function badm_form_alter(&$form, &$form_state, $form_id) {
       '#weight' => 100, // Ensures the cancel button is at the left of others
     ];
   }
+  return $form;
 }
 
 /**
