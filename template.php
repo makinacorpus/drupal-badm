@@ -546,7 +546,7 @@ function badm_links($variables) {
 function badm_preprocess_table(&$vars) {
 
   // Make it bootstrap yeah!
-  if (is_string($vars['attributes']['class'])) {
+  if (isset($vars['attributes']['class']) && is_string($vars['attributes']['class'])) {
     $vars['attributes']['class'] = array($vars['attributes']['class']);
   }
   $vars['attributes']['class'][] = 'table';
