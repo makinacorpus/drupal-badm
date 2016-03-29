@@ -1,26 +1,28 @@
-{% if total_count %}
-  <div class="text">
-    ({{ "<strong>@a</strong> of @b"|t({ '@a': total_count, '@b': real_total }) }})
-  </div>
-{% endif %}
-{% if not list %}
-  <div class="text">
-    {{ "You have no messages."|t }}
-  </div>
-{% else %}
-  {% for item in list %}
-    {% if item.link %}<a href="{{ item.link }}">{% endif %}
-    <div class="media notification notification-{{ item.type }}{% if item.unread %} notification-unread{% endif %}">
-      <div class="media-left">
-        {{ item.image }}
-      </div>
-      <div class="media-body">
-        {{ item.text }}
-        <span class="time">
-          {{ item.time|interval }}
-        </span>
-      </div>
+<div class="col-md-12">
+  {% if total_count %}
+    <div class="text">
+      ({{ "<strong>@a</strong> of @b"|t({ '@a': total_count, '@b': real_total }) }})
     </div>
-    {% if item.link %}</a>{% endif %}
-  {% endfor %}
-{% endif %}
+  {% endif %}
+  {% if not list %}
+    <div class="text">
+      {{ "You have no messages."|t }}
+    </div>
+  {% else %}
+    {% for item in list %}
+      <div class="alert alert-{{ item.class }}{% if item.unread %} notification-unread{% endif %}">
+        {% if item.image %}
+          <span class="glyphicon glyphicon-{{ item.image }}"></span>
+        {% endif %}
+        {% if item.link %}
+        <a href="{{ item.link }}" class="alert-link">
+          {% endif %}
+          {{ item.text }}
+          {% if item.link %}
+        </a>
+        {% endif %}
+        <span class="time">{{ item.time|interval }}</span>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>

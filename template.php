@@ -867,3 +867,28 @@ function badm_item_list(&$variables) {
   }
   return $output;
 }
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function badm_preprocess_notification_block(&$vars) {
+  foreach($vars['list'] as &$item) {
+    switch ($item['image']) {
+      case 'picture':
+        $item['class'] = 'success';
+        break;
+
+      case 'file':
+        $item['class'] = 'info';
+        break;
+
+      case 'cloud':
+        $item['class'] = 'danger';
+        break;
+
+      case 'user':
+        $item['class'] = 'warning';
+        break;
+    }
+  }
+}
