@@ -19,6 +19,27 @@ function badm_form_user_login_block_alter(&$form, &$form_state) {
   $form['name']['#title_force'] = true;
 }
 
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function badm_form_ucms_layout_context_edit_form_alter(&$form, &$form_state) {
+  $children = element_children($form['actions']);
+  $last_action_name = end($children);
+
+  $form['actions']['#type'] = 'container';
+  $form['actions']['#attributes']['class'][] = 'form-actions';
+  $form['actions']['#theme_wrappers'] = [];
+  $form['actions']['#prefix'] = '<div class="form-actions"><div class="btn-group" role="group" aria-label="actions">';
+  $form['actions'][$last_action_name]['#prefix'] = '<div class="btn-group" role="group">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right">';
+  $form['actions'][$last_action_name]['#suffix'] = '</div></div>';
+  $form['actions']['#suffix'] = '</div></div>';
+}
+
 /**
  * Implements hook_form_FORM_ID_alter().
  */
