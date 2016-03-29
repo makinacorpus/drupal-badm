@@ -39,3 +39,5 @@ settings[gulpifier_whitelist][css][] = hsm_content:responsive-pagepreview.css
 settings[gulpifier_whitelist][css][] = responsive_preview:css/responsive-preview.base.css
 settings[gulpifier_whitelist][css][] = responsive_preview:css/responsive-preview.icons.css
 settings[gulpifier_whitelist][css][] = responsive_preview:css/responsive-preview.theme.css
+
+settings[gulpifier_whitelist][css][] = ulink:js/better-autocomplete/better-autocomplete.css
