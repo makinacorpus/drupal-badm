@@ -1,0 +1,4 @@
+name = Bootstrap Base Theme
+core = 7.x
+
+engine = twig

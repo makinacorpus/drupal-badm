@@ -19,27 +19,6 @@ function badm_form_user_login_block_alter(&$form, &$form_state) {
   $form['name']['#title_force'] = true;
 }
 
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function badm_form_ucms_layout_context_edit_form_alter(&$form, &$form_state) {
-  $children = element_children($form['actions']);
-  $last_action_name = end($children);
-
-  $form['actions']['#type'] = 'container';
-  $form['actions']['#attributes']['class'][] = 'form-actions';
-  $form['actions']['#theme_wrappers'] = [];
-  $form['actions']['#prefix'] = '<div class="form-actions"><div class="btn-group" role="group" aria-label="actions">';
-  $form['actions'][$last_action_name]['#prefix'] = '<div class="btn-group" role="group">
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="caret"></span>
-      </button>
-      <div class="dropdown-menu dropdown-menu-right">';
-  $form['actions'][$last_action_name]['#suffix'] = '</div></div>';
-  $form['actions']['#suffix'] = '</div></div>';
-}
-
 /**
  * Implements hook_form_FORM_ID_alter().
  */
@@ -340,45 +319,6 @@ EOT;
 }
 
 /**
- * Overrides theme_button().
- */
-function badm_button($variables) {
-  $element = $variables['element'];
-  $element['#attributes']['type'] = 'submit';
-  element_set_attributes($element, array('id', 'name', 'value'));
-  $value = null;
-
-  // I am sorry because I am going to go to hell for this.
-  // @todo Keeping it in case.
-  if (!empty($element['#submit']) && in_array('commerce_cart_line_item_delete_form_submit', $element['#submit'])) {
-    // Commerce cart remove button.
-    $element['#attributes']['class'][] = 'close';
-    $element['#attributes']['aria-label'][] = t("Remove");
-    $value = '<span aria-hidden="true">&times;</span>';
-  } else if (false && t("Search") === $element['#value']) {
-    // Search button.
-    $element['#attributes']['class'][] = 'glyphicon';
-    $element['#attributes']['class'][] = 'glyphicon-search';
-  } else if ($class = _badm_colorize_button($element['#value'])) {
-    $element['#attributes']['class'][] = 'btn';
-    // @todo Un-hardcoded this. (see drupal bootstrap)
-    $element['#attributes']['class'][] = $class;
-  }
-
-  if (!empty($element['#attributes']['disabled'])) {
-    $element['#attributes']['class'][] = 'disabled';
-  }
-
-  if ($value) {
-    return '<button' . drupal_attributes($element['#attributes']) . ' />' . $value . '</button>';
-  } else if (isset($element['#content'])) {
-    return '<button' . drupal_attributes($element['#attributes']) . ' />' . $element['#content'] . '</button>';
-  } else {
-    return '<input' . drupal_attributes($element['#attributes']) . ' />';
-  }
-}
-
-/**
  * Overrides theme_submit().
  */
 function badm_submit($variables) {
@@ -655,65 +595,4 @@ function badm_tableselect($variables) {
     }
   }
   return theme('table', array('header' => $header, 'rows' => $rows, 'empty' => $element['#empty'], 'attributes' => $element['#attributes']));
-}
-
-/**
- * Colorize buttons based on the text value.
- *
- * @param string $text
- *   Button text to search against.
- *
- * @return string
- *   The specific button class to use or FALSE if not matched.
- */
-function _badm_colorize_button($text) {
-  // Text values containing these generic strings
-  $generic_strings = array(
-    'btn-primary' => array(
-      t('Actualiser'),
-      t('Write'),
-      t('Chercher'),
-      t('Next'),
-      t('Terminer ma commande'),
-      // t("Cancel"),
-      // t("Back"),
-    ),
-    'btn-warning' => array(
-    ),
-    'btn-danger' => array(
-      t("Delete"),
-      t("Rebuild"),
-      t("Restore"),
-      t("Revert"),
-      t("Remove"),
-      t("Re-index selected"),
-      t("Re-index"),
-    ),
-    'btn-success' => array(
-      t('Log in'),
-      t('Update'),
-      t("Follow"),
-      t('Send'),
-      t('Confirm'),
-      t('Submit'),
-      t('Save'),
-      t('Add'),
-      t('Create'),
-      t('Apply'),
-      t("Upload")
-    ),
-    'btn-default' => array(
-      t('Export'),
-      t('Import'),
-      t('Stock épuisé'),
-    ),
-  );
-  foreach ($generic_strings as $class => $strings) {
-    foreach ($strings as $string) {
-      if (strpos(drupal_strtolower($text), drupal_strtolower($string)) !== FALSE) {
-        return $class;
-      }
-    }
-  }
-  return 'btn-primary';
 }

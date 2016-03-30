@@ -3,6 +3,8 @@ core = 7.x
 
 engine = twig
 
+base theme = bootbase
+
 regions[content] = Content
 regions[help] = Help
 regions[sidebar_first] = First sidebar
