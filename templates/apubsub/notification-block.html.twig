@@ -1,7 +1,11 @@
 <div class="col-md-12">
-  {% if total_count %}
+  {% if total_count and total_count < real_count %}
     <div class="text">
-      ({{ "<strong>@a</strong> of @b"|t({ '@a': total_count, '@b': real_total }) }})
+      {% if unread_count %}
+        ({{ "<strong>@a</strong> of @b"|t({ '@a': total_count, '@b': real_total }) }})
+      {% else %}
+        ({{ "@a of @b"|t({ '@a': total_count, '@b': real_total }) }})
+      {% endif %}
     </div>
   {% endif %}
   {% if not list %}
@@ -24,5 +28,8 @@
         <span class="time">{{ item.time|interval }}</span>
       </div>
     {% endfor %}
+    {% if read_form %}
+      {{ render(read_form) }}
+    {% endif %}
   {% endif %}
 </div>
