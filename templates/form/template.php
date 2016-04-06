@@ -96,6 +96,20 @@ function _badm_vertical_tabs_recursion(&$form, $vertical_tabs = []) {
 }
 
 /**
+ * Recurse into forms to set the #form_horizontal property.
+ */
+function _badm_form_horizontal_set(&$form, $isHorizontal = false) {
+  foreach (element_children($form) as $key) {
+    if (isset($form[$key]['#type'])) {
+      if (!isset($form[$key]['#form_horizontal'])) {
+        $form[$key]['#form_horizontal'] = $isHorizontal;
+      }
+      _badm_form_horizontal_set($form[$key], $isHorizontal);
+    }
+  }
+}
+
+/**
  * Override theme_vertical_tabs().
  */
 function badm_vertical_tabs($variables) {
@@ -114,18 +128,6 @@ function badm_vertical_tabs($variables) {
   return $element['#children'];
 }
 
-
-/**
- * Tell if the current form is horizontal
- */
-function _badm_form_is_horizontal($set = null) {
-  static $is_horizontal = false;
-  if (null !== $set) {
-    $is_horizontal = (bool)$set;
-  }
-  return $is_horizontal;
-}
-
 /**
  * Generic form alter.
  */
@@ -134,13 +136,12 @@ function badm_form_alter(&$form, &$form_state, $form_id) {
 }
 
 function badm_form_after_build(&$form, &$form_state) {
-  if (isset($form['#form_horizontal'])) {
-    _badm_form_is_horizontal($form['#form_horizontal']);
-  } else {
-    _badm_form_is_horizontal(false);
-  }
 
-  if (_badm_form_is_horizontal()) {
+  $isHorizontal = isset($form['#form_horizontal']) && $form['#form_horizontal'];
+  $form['#form_horizontal'] = $isHorizontal;
+  _badm_form_horizontal_set($form, $isHorizontal);
+
+  if ($isHorizontal) {
     $form['#attributes']['class'][] = 'form-horizontal';
   }
 
@@ -375,7 +376,7 @@ function badm_preprocess_form_element(&$variables) {
   if (isset($element['#form_horizontal'])) {
     $is_horizontal = (bool)$element['#form_horizontal'];
   } else {
-    $is_horizontal = _badm_form_is_horizontal();
+    $is_horizontal = false;
   }
 
   $variables['form_horizontal'] = $is_horizontal;
