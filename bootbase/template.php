@@ -415,10 +415,12 @@ function bootbase_button($variables) {
       $element['#attributes']['class'][] = 'glyphicon-search';
     }
     else {
-      if ($class = _bootbase_colorize_button($element['#value'])) {
-        $element['#attributes']['class'][] = 'btn';
-        // @todo Un-hardcoded this. (see drupal bootstrap)
-        $element['#attributes']['class'][] = $class;
+      if (empty($element['#attributes']['class']) || false === array_search('btn', $element['#attributes']['class'])) {
+        if ($class = _bootbase_colorize_button($element['#value'])) {
+          $element['#attributes']['class'][] = 'btn';
+          // @todo Un-hardcoded this. (see drupal bootstrap)
+          $element['#attributes']['class'][] = $class;
+        }
       }
     }
   }

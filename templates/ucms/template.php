@@ -207,7 +207,14 @@ function badm_links__ucms_contrib_actions__icon($variables) {
 function badm_form_ucms_dashboard_search_form_alter(&$form, &$form_state) {
   $form['query']['#prefix'] = '<div class="input-group">';
   $form['query']['#theme_wrappers'] = [];
-  $form['submit']['#prefix'] = '<span class="input-group-btn">';
-  $form['submit']['#content'] = '<span class="glyphicon glyphicon-search"></span> ' . $form['submit']['#value'];
+  if (isset($form['clear'])) {
+    $form['clear']['#prefix'] = '<span class="input-group-btn">';
+    $form['clear']['#content'] = '<span class="glyphicon glyphicon-remove"></span>';
+    $form['clear']['#attributes']['class'][] = 'btn';
+    $form['clear']['#attributes']['class'][] = 'btn-default';
+  } else {
+    $form['submit']['#prefix'] = '<span class="input-group-btn">';
+  }
+  $form['submit']['#content'] = '<span class="glyphicon glyphicon-search"></span>';
   $form['submit']['#suffix'] = '</span></div>';
 }
