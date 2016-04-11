@@ -100,7 +100,7 @@ function _badm_vertical_tabs_recursion(&$form, $vertical_tabs = []) {
  */
 function _badm_form_horizontal_set(&$form, $isHorizontal = false) {
   foreach (element_children($form) as $key) {
-    if (isset($form[$key]['#type'])) {
+    if (isset($form[$key]['#type'])|| isset($form[$key]['#field_name'])) {
       if (!isset($form[$key]['#form_horizontal'])) {
         $form[$key]['#form_horizontal'] = $isHorizontal;
       }
@@ -363,7 +363,7 @@ function badm_preprocess_form_element(&$variables) {
       $element['#title_display'] = 'invisible';
       unset($element['#title']);
       // FIXME: No better way ?
-      if (!empty($element['#parents'])) {
+      if (!empty($element['#parents']) && count($element['#parents']) > 1) {
         $element['#form_horizontal'] = false;
       }
       break;
