@@ -48,6 +48,21 @@ function bootbase_links__main_menu($variables) {
 }
 
 /**
+ * Overrides theme_menu_tree().
+ */
+function bootbase_menu_tree__admin($variables) {
+  return '<ul class="menu list-unstyled">' . $variables['tree'] . '</ul>';
+}
+
+/**
+ * Overrides theme_menu_link().
+ */
+function bootbase_menu_link__admin($vars) {
+  $vars['element']['#localized_options']['attributes']['class'][] = 'tree-item';
+  return theme('menu_link', $vars);
+}
+
+/**
  * Overrides theme_image().
  *
  * Why the F*** would they not add classes to images??
