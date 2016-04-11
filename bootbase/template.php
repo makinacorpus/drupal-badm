@@ -51,7 +51,7 @@ function bootbase_links__main_menu($variables) {
  * Overrides theme_menu_tree().
  */
 function bootbase_menu_tree__admin($variables) {
-  return '<ul class="menu list-unstyled">' . $variables['tree'] . '</ul>';
+  return '<ul class="menu tree-admin">' . $variables['tree'] . '</ul>';
 }
 
 /**
