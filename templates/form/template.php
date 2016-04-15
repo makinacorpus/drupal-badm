@@ -363,7 +363,7 @@ function badm_preprocess_form_element(&$variables) {
       $element['#title_display'] = 'invisible';
       unset($element['#title']);
       // FIXME: No better way ?
-      if (!empty($element['#parents']) && count($element['#parents']) > 1) {
+      if (!empty($element['#parents']) && count($element['#array_parents']) > 1) {
         $element['#form_horizontal'] = false;
       }
       break;
