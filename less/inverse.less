@@ -1,0 +1,26 @@
+
+.inverse {
+
+  .alert {
+    padding: @alert-padding;
+    margin-bottom: @line-height-computed;
+    border: 1px solid transparent;
+    border-radius: @alert-border-radius;
+  }
+
+  .alert-success {
+    .alert-variant(@alert-success-text; @alert-success-border; @alert-success-bg);
+  }
+
+  .alert-info {
+    .alert-variant(@alert-info-text; @alert-info-border; @alert-info-bg);
+  }
+
+  .alert-warning {
+    .alert-variant(@alert-warning-text; @alert-warning-border; @alert-warning-bg);
+  }
+
+  .alert-danger {
+    .alert-variant(@alert-danger-bg; @alert-danger-border; @alert-danger-text);
+  }
+}
