@@ -1,0 +1,67 @@
+@font-face {
+  font-family: 'iconsfont';
+  src: url('../dist/iconsfont.eot');
+  src: url('../dist/iconsfont.eot') format('embedded-opentype'),
+  url('../dist/iconsfont.ttf') format('truetype'),
+  url('../dist/iconsfont.woff') format('woff'),
+  url('../dist/iconsfont.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.icon {
+  font-family: 'iconsfont';
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@icons:
+        EA0A leaflet,
+        EA0B linkedin,
+        EA0C lock,
+        EA0D newsletter,
+        EA0E page-up,
+        EA0F people,
+        EA01 account,
+        EA1A search-map,
+        EA1B search,
+        EA1C share,
+        EA1D thumb,
+        EA1E twitter,
+        EA1F warning,
+        EA02 clock,
+        EA03 doctor,
+        EA04 enveloppe-thin,
+        EA05 enveloppe,
+        EA06 facebook,
+        EA07 form,
+        EA08 france,
+        EA09 home,
+        EA10 phone,
+        EA11 pin-address,
+        EA12 pin-mini,
+        EA13 pinmap-active,
+        EA14 pinmap,
+        EA15 player,
+        EA16 price-tag,
+        EA17 question-bubble,
+        EA18 question,
+        EA19 rdv,
+        EA20 youtube,
+        EA21 print
+;
+
+.iconclasses(@iterator:1) when (@iterator <= length(@icons)) {
+  @code: extract(extract(@icons, @iterator), 1);
+  @name: extract(extract(@icons, @iterator), 2);
+  .icon-@{name} {
+    &:before { content: "\@{code}"; }
+  }
+  .iconclasses((@iterator + 1));
+}
+.iconclasses();
