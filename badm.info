@@ -37,7 +37,8 @@ settings[gulpifier_whitelist][css][] = gantt:assets/jQuery.Gantt/css/style.css
 settings[gulpifier_whitelist][css][] = badm:jquery-ui-bootstrap/jquery-ui-1.10.3.custom.css
 
 settings[gulpifier_whitelist][css][] = pagepreview:pagepreview.css
-settings[gulpifier_whitelist][css][] = hsm_content:responsive-pagepreview.css
+settings[gulpifier_whitelist][css][] = hsm_content:css/responsive-pagepreview.css
+settings[gulpifier_whitelist][css][] = hsm_content:css/picto.css
 settings[gulpifier_whitelist][css][] = responsive_preview:css/responsive-preview.base.css
 settings[gulpifier_whitelist][css][] = responsive_preview:css/responsive-preview.icons.css
 settings[gulpifier_whitelist][css][] = responsive_preview:css/responsive-preview.theme.css
