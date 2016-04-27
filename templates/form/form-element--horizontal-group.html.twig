@@ -10,21 +10,18 @@
     <div class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10">
   {% endif %}
 
-    <div class="form-inline">
-      <div class="input-group">
-        {% if prefix %}
-          <span class="input-group-addon">
-            {{ prefix }}
-          </span>
-        {% endif %}
-        {{ input }}
-        {% if suffix %}
-          <span class="input-group-addon">
-            {{ suffix }}
-          </span>
-        {% endif %}
-      </div>
-      {% if description %}<p class="help-block">{{ description }}</p>{% endif %}
-    </div>
+  <div class="input-group">
+    {% if prefix %}
+      <span class="input-group-addon">
+        {{ prefix }}
+      </span>
+    {% endif %}
+    {{ input }}
+    {% if suffix %}
+      <span class="input-group-addon">
+        {{ suffix }}
+      </span>
+    {% endif %}
   </div>
+  {% if description %}<p class="help-block">{{ description }}</p>{% endif %}
 </div>

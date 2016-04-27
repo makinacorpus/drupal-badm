@@ -63,6 +63,20 @@ fieldset {
   }
 }
 
+.form-horizontal {
+  fieldset .panel-body {
+    padding: 0;
+  }
+  .form-group {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .form-inline .form-group {
+    vertical-align: inherit;
+    padding-right: @padding-large-horizontal;
+  }
+}
+
 fieldset.container-inline > div, div.container-inline {
   .inline-container-mixin();
   .form-group {

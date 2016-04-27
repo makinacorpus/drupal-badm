@@ -12,9 +12,7 @@ function bootbase_theme_registry_alter(&$theme_registry) {
  * Implements hook_preprocess().
  */
 function bootbase_preprocess(&$vars) {
-  $vars['logged_in'] = \Drupal::currentUser()
-                              ->isAuthenticated()
-  ;
+  $vars['logged_in'] = user_is_logged_in();
 }
 
 /**

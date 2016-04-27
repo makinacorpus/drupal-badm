@@ -100,11 +100,25 @@ function _badm_vertical_tabs_recursion(&$form, $vertical_tabs = []) {
  */
 function _badm_form_horizontal_set(&$form, $isHorizontal = false) {
   foreach (element_children($form) as $key) {
-    if (isset($form[$key]['#type'])|| isset($form[$key]['#field_name'])) {
-      if (!isset($form[$key]['#form_horizontal'])) {
-        $form[$key]['#form_horizontal'] = $isHorizontal;
+    $element = &$form[$key];
+    if (isset($element['#input']) && $element['#input']) {
+      // Input has been found, and must be displayed horizontally, stop
+      // processing here, just set the horizontal property.
+      $element['#form_horizontal'] = $isHorizontal;
+    } else if (isset($element['#type']) && 'item' === $element['#type'] && !empty($element['#title'])) {
+      // Items, when they have a title, must be treated as horizontal element
+      // and their children as not.
+      $element['#form_horizontal'] = $isHorizontal;
+      // Little bit of magic...
+      if (!in_array('form_element', $element['#theme_wrappers'])) {
+        $element['#theme_wrappers'][] = 'form_element';
       }
-      _badm_form_horizontal_set($form[$key], $isHorizontal);
+    } else {
+      if (isset($element['#theme_wrappers']) && (false !== ($pos = array_search('form_element', $element['#theme_wrappers'])))) {
+        unset($element['#theme_wrappers'][$pos]);
+      }
+      // No input has been horizontalized, continue searching.
+      _badm_form_horizontal_set($element, $isHorizontal);
     }
   }
 }
@@ -342,8 +356,8 @@ function badm_preprocess_form_element(&$variables) {
   } else {
     $variables['id'] = null;
   }
-
   $attributes['class'][] = 'form-group';
+
   $attributes['class'][] = 'form-item';
   if (!empty($element['#required']) && $element['#required']) {
     $attributes['class'][] = 'form-required';
@@ -355,6 +369,10 @@ function badm_preprocess_form_element(&$variables) {
     $attributes['class'][] = 'form-item-' . strtr($element['#name'], [' ' => '-', '_' => '-', '[' => '-', ']' => '']);
   }
 
+  if (empty($element['#type'])) {
+    $element['#type'] = null;
+  }
+
   switch ($element['#type']) {
 
     case 'radio':
@@ -362,10 +380,6 @@ function badm_preprocess_form_element(&$variables) {
       // Title has already been rendered.
       $element['#title_display'] = 'invisible';
       unset($element['#title']);
-      // FIXME: No better way ?
-      if (!empty($element['#parents']) && count($element['#array_parents']) > 1) {
-        $element['#form_horizontal'] = false;
-      }
       break;
 
     case 'list_other_select':
@@ -429,6 +443,13 @@ function badm_preprocess_textfield(&$variables) {
       $element['#title_display'] = 'invisible';
     }
   }
+}
+
+/**
+ * Overrides theme_container().
+ */
+function badm_container($variables) {
+  return $variables['element']['#children'];
 }
 
 /**
