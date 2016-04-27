@@ -446,13 +446,6 @@ function badm_preprocess_textfield(&$variables) {
 }
 
 /**
- * Overrides theme_container().
- */
-function badm_container($variables) {
-  return $variables['element']['#children'];
-}
-
-/**
  * Implements hook_preprocess_HOOK().
  */
 function badm_preprocess_textarea(&$variables) {
