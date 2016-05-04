@@ -57,7 +57,7 @@ function bootbase_menu_tree__admin($variables) {
  */
 function bootbase_menu_link__admin($vars) {
   $vars['element']['#localized_options']['attributes']['class'][] = 'tree-item';
-  return theme('menu_link', $vars);
+  return theme_menu_link($vars);
 }
 
 /**
