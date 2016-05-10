@@ -37,6 +37,7 @@ Author: Kris Zhang
       $msgbox = $(msghtml);
       $(document.body).append($msgbox);
       $msgbox.find(".modal-body").append($this);
+      $this.show();
     };
 
     var createButton = function(_options) {
