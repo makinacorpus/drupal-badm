@@ -1,0 +1,33 @@
+<div class="col-md-12">
+  {{ top }}
+  {% set previous_period = '' %}
+  {% for item in list %}
+    {% if item.period and item.period != previous_period %}
+      <h2>{{ item.period }}</h2>
+      {% set previous_period = item.period %}
+    {% endif %}
+    <div class="alert alert-{{ item.class }}{% if item.unread %} notification-unread{% endif %}">
+      <div class="pull-right">{{ item.checkbox }}</div>
+      <span class="glyphicon glyphicon-{{ item.image }}"></span>
+      {% if item.link %}
+        <a href="{{ item.link }}" class="alert-link">
+          {{ item.text }}
+        </a>
+      {% else %}
+        {{ item.text }}
+      {% endif %}
+      <br/>
+      <span class="time">{{ item.time|interval }}</span>
+    </div>
+  {% else %}
+    <div class="text">
+      {{ "You have no messages."|trans }}
+    </div>
+  {% endfor %}
+  {% if pager %}
+    {{ pager }}
+  {% endif %}
+</div>
+{% if form %}
+  {{ render(form) }}
+{% endif %}

@@ -195,6 +195,49 @@ function bootbase_preprocess_notification_block(&$vars) {
   }
 }
 
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function bootbase_preprocess_notification_page(&$variables) {
+  // Apply classes to elements
+  bootbase_preprocess_notification_block($variables);
+
+  $today = new DateTime('today');
+  $delta = null;
+
+  foreach ($variables['list'] as &$item) {
+
+    // Determine day.
+    $itemDate = new DateTime('@' . $item['time']);
+    $interval = $today->diff($itemDate);
+    if (!$interval->invert) {
+      // Today.
+      $currentdelta = 0;
+    } else {
+      $currentdelta = (int)1 + $interval->d;
+    }
+
+    if ($currentdelta !== $delta) {
+      $delta = $currentdelta;
+      // We need to create a new title.
+      switch ($delta) {
+        case 0:
+          $title = t("Today");
+          break;
+        case 1:
+          $title = t("Yesterday");
+          break;
+        default:
+          $title = format_plural($delta, "@count day ago", "@count days ago");
+          break;
+      }
+    } else {
+      $title = null;
+    }
+
+    $item['period'] = $title;
+  }
+}
 
 /**
  * Overrides theme_links().
