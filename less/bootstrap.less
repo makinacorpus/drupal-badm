@@ -53,3 +53,13 @@
 // Utility classes
 @import "../bootstrap/less/utilities.less";
 @import "../bootstrap/less/responsive-utilities.less";
+
+// Fixes IE11 scrollbar bug, but may break Windows8/Metro/IE10 responsiveness.
+// Please read the following:
+//   https://stackoverflow.com/questions/17045132/scrollbar-overlay-in-ie10-how-do-you-stop-that
+// And especially:
+//   https://stackoverflow.com/a/17045936
+//   https://stackoverflow.com/a/19706857
+html, body {
+  -ms-overflow-style: scrollbar;
+}
