@@ -142,15 +142,17 @@ function badm_breadcrumb($variables) {
   if (!empty($breadcrumb)) {
     $output = '<h2 class="sr-only">' . t('You are here') . '</h2>';
     if (!empty($breadcrumb)) {
-      // Remove first item and set the Home glyphicon, for fun.
-      $front = url('<front>');
-      array_unshift($breadcrumb, <<<EOT
+      if (variable_get('badm_breadcrumb_display_home', false)) {
+        // Remove first item and set the Home glyphicon, for fun.
+        $front = url('<front>');
+        array_unshift($breadcrumb, <<<EOT
 <a href="$front">
   <span aria-hidden="true" class="glyphicon glyphicon-home"></span>
   <span class="sr-only">Home</span>
 </a>
 EOT
-      );
+        );
+      }
 
       $links = '<li>' . implode('</li><li>', $breadcrumb) . '</li>';
     } else {
