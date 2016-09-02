@@ -9,7 +9,6 @@
  */
 function badm_form_user_login_alter(&$form, &$form_state) {
   $form['name']['#title_force'] = true;
-  $form['name']['#title'] = t("Your e-mail address");
 }
 
 /**
