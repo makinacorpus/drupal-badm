@@ -28,6 +28,7 @@ settings[gulpifier_whitelist][css][] = diff:css/diff.boxes.css
 settings[gulpifier_whitelist][css][] = filechunk:filechunk.css
 settings[gulpifier_whitelist][css][] = unoderef:unoderef.css
 settings[gulpifier_whitelist][css][] = minidialog:minidialog.css
+settings[gulpifier_whitelist][css][] = ucms_contrib:lib/dragula/dragula.min.css
 settings[gulpifier_whitelist][css][] = ucms_contrib:ucms_contrib.css
 settings[gulpifier_whitelist][css][] = ucms_label:js/select2.min.css
 settings[gulpifier_whitelist][css][] = ucms_label:js/select2-bootstrap.min.css
