@@ -3,7 +3,7 @@
 /**
  * Overrides theme_links().
  */
-function badm_links__ucms_dashboard_sort($variables) {
+function badm_links__udashboard_sort($variables) {
 
   $links  = $variables['links'];
   // Ugly hack else the dropdown menu goes away.
@@ -47,7 +47,7 @@ function badm_links__ucms_dashboard_sort($variables) {
 /**
  * Overrides theme_links().
  */
-function badm_links__ucms_dashboard_filter($variables) {
+function badm_links__udashboard_filter($variables) {
   $links    = $variables['links'];
   $heading  = $variables['heading'];
   $output   = '';
@@ -204,7 +204,7 @@ function badm_links__ucms_contrib_actions__icon($variables) {
  * @param $form
  * @param $form_state
  */
-function badm_form_ucms_dashboard_search_form_alter(&$form, &$form_state) {
+function badm_form_udashboard_search_form_alter(&$form, &$form_state) {
   $form['query']['#prefix'] = '<div class="input-group">';
   $form['query']['#theme_wrappers'] = [];
   if (isset($form['clear'])) {
