@@ -1,0 +1,21 @@
+{% macro tree(tree, current) %}
+  {% import _self as umenu %}
+  {% if tree.children %}
+    <ul class="menu tree-admin">
+      {% for item in tree.children %}
+        <li>
+          {% if current == item.nodeId %}
+            <a class="tree-item active" href="{{ url(item.route) }}">{{ item.title }}</a>
+          {% else %}
+            <a class="tree-item" href="{{ url(item.route) }}">{{ item.title }}</a>
+          {% endif %}
+          {{ umenu.tree(item, current) }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}
+
+{% import _self as umenu %}
+
+{{ umenu.tree(tree, current) }}
