@@ -2,9 +2,11 @@
   <div class="media-left pull-left">
     {% if content.image %}
       {{ content.image }}
+    {% elseif content.field_image %}
+      {{ content.field_image }}
     {% else %}
       <div class="media-object">
-        {{ content|without(['body','links','comments']) }}
+        {{ content|without(['links','comments']) }}
       </div>
     {% endif %}
   </div>
