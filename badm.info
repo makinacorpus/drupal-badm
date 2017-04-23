@@ -26,6 +26,7 @@ settings[gulpifier_whitelist][css][] = badm:jquery-ui-bootstrap/jquery-ui-1.10.3
 settings[gulpifier_whitelist][css][] = diff:css/diff.boxes.css
 settings[gulpifier_whitelist][css][] = diff:css/diff.default.css
 settings[gulpifier_whitelist][css][] = diff:diff.css
+settings[gulpifier_whitelist][css][] = dragula:dragula.css
 settings[gulpifier_whitelist][css][] = filechunk:filechunk.css
 settings[gulpifier_whitelist][css][] = gantt:assets/jQuery.Gantt/css/style.css
 settings[gulpifier_whitelist][css][] = hsm_content:css/picto.css
