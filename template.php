@@ -66,6 +66,13 @@ function badm_library_alter(&$libraries, $module) {
 }
 
 /**
+ * Implements hook_element_info_alter().
+ */
+function badm_element_info_alter(&$type) {
+  $type['udatetime']['#process'][] = 'badm_udatetime_element_process';
+}
+
+/**
  * Implements hook_preprocess_HOOK().
  */
 function badm_preprocess_block(&$variables) {
@@ -571,3 +578,21 @@ EOT;
 */
 }
 
+/**
+ * Process udatetime elements.
+ */
+function badm_udatetime_element_process($element) {
+  // Remove stupid container
+  unset($element['container']['#prefix']);
+  unset($element['container']['#suffix']);
+
+  return $element;
+}
+
+/**
+ * Implements hook_widget_WIDGET_TYPE_form_alter().
+ */
+function badm_field_widget_udate_range_form_alter(&$element, &$form_state, $context) {
+  $element['#type'] = 'fieldset';
+  $element['#title'] = $context['instance']['label'];
+}
