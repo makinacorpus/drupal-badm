@@ -41,6 +41,7 @@ settings[gulpifier_whitelist][css][] = ucms_contrib:lib/dragula/dragula.min.css
 settings[gulpifier_whitelist][css][] = ucms_contrib:ucms_contrib.css
 settings[gulpifier_whitelist][css][] = ucms_label:js/select2-bootstrap.min.css
 settings[gulpifier_whitelist][css][] = ucms_label:js/select2.min.css
+settings[gulpifier_whitelist][css][] = ucms_site:dist/ucms.min.css
 settings[gulpifier_whitelist][css][] = ucms_tree:ucms_tree.css
 settings[gulpifier_whitelist][css][] = udashboard:js/udashboard.css
 settings[gulpifier_whitelist][css][] = ulink:js/better-autocomplete/better-autocomplete.css
