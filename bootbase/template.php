@@ -357,7 +357,6 @@ function bootbase_preprocess_region(&$variables) {
   // the 'render element' for the 'region' theme hook is 'elements'.
   foreach (element_children($variables['elements']) as $key) {
     $variables['content'][$key] = &$variables['elements'][$key];
-    $variables['content'][$key]['#sorted'] = TRUE;
   }
 }
 
