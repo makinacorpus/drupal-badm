@@ -15,5 +15,8 @@
             "homepage": "http://makina-corpus.com"
         }
     ],
+	"require" : {
+		"makinacorpus/drupal-gulpifier" : "*"
+    },
     "minimum-stability": "dev"
 }
