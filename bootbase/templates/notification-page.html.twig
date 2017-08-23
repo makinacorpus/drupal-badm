@@ -18,7 +18,7 @@
           {{ item.text }}
         {% endif %}
         <br/>
-        <span class="time">{{ item.time|interval }}</span>
+        <span class="time">{{ item.time|time_diff }}</span>
       </p>
     </div>
   {% else %}
