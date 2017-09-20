@@ -83,7 +83,7 @@ function _badm_vertical_tabs_find($form, &$ret) {
  * collapsing on children.
  */
 function _badm_vertical_tabs_recursion(&$form, $vertical_tabs = []) {
-  if (isset($form['#type']) && 'fieldset' === $form['#type'] && isset($form['#group'])) {
+  if (isset($form['#type']) && 'fieldset' === $form['#type'] && isset($form['#group']) && empty($form['#keep_collapsible'])) {
     if (in_array($form['#group'], $vertical_tabs)) {
       $form['#collapsible'] = 0;
       $form['#collapsed'] = 0;
