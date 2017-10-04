@@ -429,6 +429,11 @@ function bootbase_page_alter(&$page) {
  * Implements hook_form_FORM_ID_alter().
  */
 function bootbase_form_ucms_layout_context_edit_form_alter(&$form, &$form_state) {
+  if (empty($form['actions'])) {
+    $form['actions'] = [];
+    return;
+  }
+
   $children = element_children($form['actions']);
   $last_action_name = end($children);
 
