@@ -573,13 +573,21 @@ function bootbase_preprocess_form_element(&$variables) {
   $element += ['#title_display' => 'before'];
   $attributes = $element['#attributes'];
 
-  // Remove classes, they will be duplicated in children anyway, if we don't
-  // remove it, tabledrag will not work anymore, because it will match the div
-  // instead of the inner weight select, and attempt to set the value on the
-  // div instead of the select. This is a very nasty bug, it took me a complete
-  // hour to debug and find the cause, then fix it.
+  // Remove duplicated classes, if we don't remove it, tabledrag will not work
+  // anymore, because it will match the div instead of the inner weight select,
+  // and attempt to set the value on the div instead of the select. This is a
+  // very nasty bug, it took me a complete hour to debug and find the cause,
+  // then fix it. Then another hour because it broke stuff, and refix it. Now
+  // it's good enough.
   if (!empty($element['#children'])) {
-    $attributes['class'] = [];
+    if (!empty($attributes['class'])) {
+      foreach ($attributes['class'] as $index => $class) {
+        // I am so so so sorry for this performance drain.
+        if (preg_match('/class="(.*\s+|)' . $class . '(\s+.*|)"/', $element['#children'])) {
+          unset($attributes['class'][$index]);
+        }
+      }
+    }
   }
 
   if (isset($element['#id'])) {
