@@ -352,6 +352,12 @@ function bootbase_preprocess_region(&$variables) {
     $variables['theme_hook_suggestions'][] = 'region__' . $variables['region'] . '__' . $node->type;
   }
 
+  if (empty($variables['content'])) {
+    $variables['content'] = [];
+  } else if (is_string($variables['content'])) {
+    $variables['content'] = ['#markup' => $variables['content']];
+  }
+
   // Now that we are a #theme and not a #theme_wrapper, move all renderable
   // children into the content array instead of leaving them as-is. Per default
   // the 'render element' for the 'region' theme hook is 'elements'.
