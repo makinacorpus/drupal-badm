@@ -4,7 +4,7 @@
     "description": " Bootstrap based admin theme",
     "keywords": [],
     "homepage": "http://github.com/makinacorpus/drupal-badm",
-    "license": "GPL-2",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Pierre Rineau",
@@ -15,8 +15,8 @@
             "homepage": "http://makina-corpus.com"
         }
     ],
-	"require" : {
-		"makinacorpus/drupal-gulpifier" : "*"
+	"suggest" : {
+		"makinacorpus/drupal-gulpifier" : "Allows a better js/css aggregation"
     },
     "minimum-stability": "dev"
 }
