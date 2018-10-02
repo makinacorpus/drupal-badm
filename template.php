@@ -166,18 +166,19 @@ EOT
       $links = '';
     }
 
-    if (($item = menu_get_item()) && ($item['type'] == MENU_LOCAL_TASK)) {
-      _menu_translate($item, $item['original_map']);
-      $current = $item['title'];
-    } else {
-      $current = drupal_get_title();
+    if ($withCurrent = variable_get('badm_breadcrumb_display_current', true)) {
+      if (($item = menu_get_item()) && ($item['type'] == MENU_LOCAL_TASK)) {
+        _menu_translate($item, $item['original_map']);
+        $current = $item['title'];
+      } else {
+        $current = drupal_get_title();
+      }
     }
 
-    $output .= '<ol class="breadcrumb">' . $links  . '<li class="active">' . $current . '</li></ol>';
+    $output .= '<ol class="breadcrumb">' . $links  . ($withCurrent ? '<li class="active">' . $current . '</li>' : '') . '</ol>';
     return $output;
   }
 }
-
 
 /**
  * Overrides theme_admin_block().
@@ -363,7 +364,7 @@ function badm_preprocess_table(&$vars) {
     $vars['attributes']['class'] = array($vars['attributes']['class']);
   }
   $vars['attributes']['class'][] = 'table';
-  if (empty($vars['attributes']['no_strip'])) {
+  if (empty($vars['attributes']['no_strip']) && variable_get('badm_breadcrumb_table_striped', true)) {
     $vars['attributes']['class'][] = 'table-striped';
   }
   $vars['attributes']['class'][] = 'table-condensed';
