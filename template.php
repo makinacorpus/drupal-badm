@@ -32,18 +32,7 @@ function badm_preprocess_page(&$variables) {
   // Force some JS inclusion.
   $opts = ['preprocess' => true, 'every_page' => true];
   $path = drupal_get_path('theme', 'badm');
-  if (theme_get_setting('gulpifier_single_js')) {
-    drupal_add_js($path . '/bootstrap/js/alert.js', $opts);
-    drupal_add_js($path . '/bootstrap/js/button.js', $opts);
-    drupal_add_js($path . '/bootstrap/js/collapse.js', $opts);
-    drupal_add_js($path . '/bootstrap/js/dropdown.js', $opts);
-    drupal_add_js($path . '/bootstrap/js/modal.js', $opts);
-    drupal_add_js($path . '/bootstrap/js/tab.js', $opts);
-    drupal_add_js($path . '/bootstrap/js/tooltip.js', $opts);
-    drupal_add_js($path . '/bootstrap/js/popover.js', $opts);
-  } else {
-    drupal_add_js($path . '/bootstrap/dist/js/bootstrap.min.js', $opts);
-  }
+  drupal_add_js($path . '/bootstrap/dist/js/bootstrap.min.js', $opts);
   drupal_add_js($path . '/js/jquery.dialog.js', $opts);
 }
 
